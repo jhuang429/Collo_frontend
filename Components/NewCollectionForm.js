@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { Dropdown } from 'react-native-material-dropdown';
 
 class NewCollectionForm extends Component {
 
@@ -30,16 +31,25 @@ class NewCollectionForm extends Component {
     handleField9 = (text) => { this.setState({ data_title_9: text }) }
     handleField10 = (text) => { this.setState({ data_title_10: text }) }
 
-    handleSubmit  = () => {
+    handleSubmit = () => {
         fetch("http://localhost:3000/collections", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json"
+                "Content-Type": "application/json",
+                "Accept": "application/json"
             },
-            body: JSON.stringify({collection: this.state})
-          })
+            body: JSON.stringify({ collection: this.state })
+        })
     }
+
+    data = [
+        { value: 'Price'}, 
+        { value: 'Date' }, 
+        { value: 'Quantity'}, 
+        { value: 'Rating' },
+        { value: 'Text'}, 
+        { value: 'Notes'}, 
+    ];
 
     render() {
         return (
@@ -50,6 +60,12 @@ class NewCollectionForm extends Component {
                     placeholderTextColor="#9a73ef"
                     autoCapitalize="none"
                     onChangeText={this.handleTitle} />
+
+                <Dropdown
+                    label='Favorite Fruit'
+                    data={this.data}
+                />
+
 
                 <TextInput style={styles.input}
                     underlineColorAndroid="transparent"
