@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
+import Colors from '../Constants/colors'
 
 class NewCollectionForm extends Component {
 
@@ -16,7 +17,7 @@ class NewCollectionForm extends Component {
         data_title_7: null,
         data_title_8: null,
         data_title_9: null,
-        data_title_1: null
+        data_title_10: null
     }
 
     handleTitle = (text) => { this.setState({ title: text }) }
@@ -43,108 +44,106 @@ class NewCollectionForm extends Component {
     }
 
     data = [
-        { value: 'Price'}, 
-        { value: 'Date' }, 
-        { value: 'Quantity'}, 
+        { value: 'Price' },
+        { value: 'Date' },
+        { value: 'Quantity' },
         { value: 'Rating' },
-        { value: 'Text'}, 
-        { value: 'Notes'}, 
+        { value: 'Text' },
+        { value: 'Notes' },
     ];
 
     render() {
         return (
-            <ScrollView style={styles.container}>
-                <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Collection Title"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
-                    onChangeText={this.handleTitle} />
+            <View>
+                <ScrollView style={styles.container}>
+                    <TextInput style={styles.input}
+                        underlineColorAndroid="transparent"
+                        placeholder="Collection Title"
+                        placeholderTextColor={Colors.primary}
+                        autoCapitalize="none"
+                        onChangeText={this.handleTitle} />
 
-                <Dropdown
-                    label='Favorite Fruit'
-                    data={this.data}
-                />
-
-
-                <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Data Field 1"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
-                    onChangeText={this.handleField1} />
-
-                <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Data Field 2"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
-                    onChangeText={this.handleField2} />
-
-                <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Data Field 3"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
-                    onChangeText={this.handleField3} />
-
-                <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Data Field 4"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
-                    onChangeText={this.handleField4} />
-
-                <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Data Field 5"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
-                    onChangeText={this.handleField5} />
-
-                <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Data Field 6"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
-                    onChangeText={this.handleField6} />
+                    <Dropdown
+                        label='Data Field 1'
+                        data={this.data}
+                        onChangeText={this.handleField1}
+                        baseColor={Colors.primary}
+                    />
 
 
-                <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Data Field 7"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
-                    onChangeText={this.handleField7} />
+                    <Dropdown
+                        label='Data Field 2'
+                        data={this.data}
+                        onChangeText={this.handleField2}
+                        baseColor={Colors.primary}
+                    />
 
-                <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Data Field 8"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
-                    onChangeText={this.handleField8} />
 
-                <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Data Field 9"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
-                    onChangeText={this.handleField9} />
+                    <Dropdown
+                        label='Data Field 3'
+                        data={this.data}
+                        onChangeText={this.handleField3}
+                        baseColor={Colors.primary}
+                    />
 
-                <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Data Field 10"
-                    placeholderTextColor="#9a73ef"
-                    autoCapitalize="none"
-                    onChangeText={this.handleField10} />
+                    <Dropdown
+                        label='Data Field 4'
+                        data={this.data}
+                        onChangeText={this.handleField4}
+                        baseColor={Colors.primary}
+                    />
+
+                    <Dropdown
+                        label='Data Field 5'
+                        data={this.data}
+                        onChangeText={this.handleField5}
+                        baseColor={Colors.primary}
+                    />
+
+                    <Dropdown
+                        label='Data Field 6'
+                        data={this.data}
+                        onChangeText={this.handleField6}
+                        baseColor={Colors.primary}
+                    />
+
+                    <Dropdown
+                        label='Data Field 7'
+                        data={this.data}
+                        onChangeText={this.handleField7}
+                        baseColor={Colors.primary}
+                    />
+
+                    <Dropdown
+                        label='Data Field 8'
+                        data={this.data}
+                        onChangeText={this.handleField8}
+                        baseColor={Colors.primary}
+                    />
+
+                    <Dropdown
+                        label='Data Field 9'
+                        data={this.data}
+                        onChangeText={this.handleField9}
+                        baseColor={Colors.primary}
+                    />
+
+                    <Dropdown
+                        label='Data Field 10'
+                        data={this.data}
+                        onChangeText={this.handleField10}
+                        baseColor={Colors.primary}
+                    />
+
+
+                </ScrollView>
 
                 <TouchableOpacity
                     style={styles.submitButton}
                     onPress={this.handleSubmit}>
                     <Text style={styles.submitButtonText}> Submit </Text>
                 </TouchableOpacity>
-
-            </ScrollView>
+            </View>
         )
     }
 }
@@ -152,7 +151,6 @@ export default NewCollectionForm
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 100,
     },
     input: {
         margin: 5,
