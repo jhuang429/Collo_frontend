@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import CollectionCard from './CollectionCard';
 
 
-function Collections() {
+function Collections(props) {
 
     const [collections, setCollections] = useState([])
 
@@ -14,7 +14,7 @@ function Collections() {
 
     return (
         <View style={styles.screen}>
-            {collections.map(coll => <CollectionCard collection={coll} key={coll.id} />)}
+            {collections.map(coll => <CollectionCard collection={coll} key={coll.id} navigation={props.navigation}/>)}
         </View>
     )
 }
