@@ -54,8 +54,8 @@ class NewCollectionForm extends Component {
 
     render() {
         return (
-            <View>
-                <ScrollView style={styles.container}>
+            <View style={styles.screen}>
+                <ScrollView >
                     <TextInput style={styles.input}
                         underlineColorAndroid="transparent"
                         placeholder="Collection Title"
@@ -150,7 +150,9 @@ class NewCollectionForm extends Component {
 export default NewCollectionForm
 
 const styles = StyleSheet.create({
-    container: {
+    screen: {
+        flex:1,
+        paddingTop: 50
     },
     input: {
         margin: 5,
