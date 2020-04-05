@@ -8,17 +8,13 @@ function ItemContainer({ route }) {
 
     return (
         <View>
-            {route.params.collection.items.map(item => (
+            {route.params.items.map(item => (
                 <View>
                     <ItemCard key={item.id} item={item} nagivation={route.params.navigation} fields={route.params.fields} />
                     <Button title="Add" onPress={() => { route.params.navigation.push('NewItemForm',{fields: route.params.fields}) }} />
                 </View>
             )
             )}
-
-
-
-                    {/* {route.params.fields.map(field => <Text key={field}>{field}</Text>)} */}
                 </View>
             )
 }
