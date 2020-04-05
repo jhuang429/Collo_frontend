@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import NewCollectionForm from './Screens/NewCollectionForm';
-import CollectionCard from './Containers/CollectionCard';
+import CollectionCard from './Components/CollectionCard';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Collections from './Containers/Collections'

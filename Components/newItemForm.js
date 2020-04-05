@@ -6,6 +6,8 @@ import Colors from '../Constants/colors'
 
 class NewItemForm extends Component {
 
+
+
     state = {
         title: '',
         user_id: 1,
@@ -34,6 +36,7 @@ class NewItemForm extends Component {
     handleField10 = (text) => { this.setState({ data_title_10: text }) }
 
     handleSubmit = () => {
+        
         fetch("http://localhost:3000/collections", {
             method: "POST",
             headers: {
@@ -53,19 +56,23 @@ class NewItemForm extends Component {
         { value: 'Notes' },
     ];
 
+    
     render() {
+        // const {fields} = this.props.route.params.fields
+
         return (
             <View>
                 <ScrollView style={styles.container}>
                     <TextInput style={styles.input}
                         underlineColorAndroid="transparent"
-                        placeholder="Collection Title"
+                        placeholder="Item Name"
                         placeholderTextColor={Colors.primary}
                         autoCapitalize="none"
                         onChangeText={this.handleTitle} />
 
+                    
                     <Dropdown
-                        label='Data Field 1'
+                        label={this.props.route.params.fields}
                         data={this.data}
                         onChangeText={this.handleField1}
                         baseColor={Colors.primary}
