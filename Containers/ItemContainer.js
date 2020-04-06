@@ -11,17 +11,17 @@ function ItemContainer({ route }) {
             {route.params.items.map(item => (
                 <View>
                     <ItemCard key={item.id} item={item} nagivation={route.params.navigation} fields={route.params.fields} />
-                    <Button title="Add" onPress={() => { route.params.navigation.push('NewItemForm',{fields: route.params.fields}) }} />
                 </View>
-            )
-            )}
-                </View>
-            )
+            ))}
+            <Button title="Add" onPress={() => { route.params.navigation.push('NewItemForm', { fields: route.params.fields }) }} />
+
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
-                screen: {
-                flex: 1,
+    screen: {
+        flex: 1,
         justifyContent: "center",
         alignItems: "center",
 

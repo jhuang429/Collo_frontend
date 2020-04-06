@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, Image, Button, TouchableHighlight } from 'react
 
 export default function CollectionCard(props) {
 
-    const { title, data_title_1, data_title_2, data_title_3, data_title_4, data_title_5, data_title_6, data_title_7, data_title_8, data_title_9, data_title_10 } = props.collection
+    const { title, id, data_title_1, data_title_2, data_title_3, data_title_4, data_title_5, data_title_6, data_title_7, data_title_8, data_title_9, data_title_10 } = props.collection
 
-    const fields = {"data_title_1": data_title_1, "data_title_2":data_title_2, "data_title_3":data_title_3, "data_title_4":data_title_4, "data_title_5":data_title_5, "data_title_6":data_title_6, "data_title_7":data_title_7, "data_title_8":data_title_8, "data_title_9":data_title_9, "data_title_10":data_title_10}
+    const fields = {collection_id: id, "data_title_1": data_title_1, "data_title_2":data_title_2, "data_title_3":data_title_3, "data_title_4":data_title_4, "data_title_5":data_title_5, "data_title_6":data_title_6, "data_title_7":data_title_7, "data_title_8":data_title_8, "data_title_9":data_title_9, "data_title_10":data_title_10}
 
     return (
         <View style={styles.container}>
