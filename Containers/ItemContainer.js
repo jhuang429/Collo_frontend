@@ -9,9 +9,7 @@ function ItemContainer({ route }) {
     return (
         <View>
             {route.params.items.map(item => (
-                <View>
                     <ItemCard key={item.id} item={item} nagivation={route.params.navigation} fields={route.params.fields} />
-                </View>
             ))}
             <Button title="Add" onPress={() => { route.params.navigation.push('NewItemForm', { fields: route.params.fields }) }} />
 

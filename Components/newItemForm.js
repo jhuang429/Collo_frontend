@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
-import { Dropdown } from 'react-native-material-dropdown';
 import Colors from '../Constants/colors'
 
 
