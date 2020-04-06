@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Colors from '../Constants/colors'
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import * as ImagePicker from 'expo-image-picker';
 
 
 class EditItemForm extends Component {
@@ -9,17 +10,17 @@ class EditItemForm extends Component {
 
     state = {
         title: '',
-        collection_id: "",
-        data_field_1: this.props.route.params.item.data_field_1,
-        data_field_2: this.props.route.params.item.data_field_2,
-        data_field_3: this.props.route.params.item.data_field_3,
-        data_field_4: this.props.route.params.item.data_field_4,
-        data_field_5: this.props.route.params.item.data_field_5,
-        data_field_6: this.props.route.params.item.data_field_6,
-        data_field_7: this.props.route.params.item.data_field_7,
-        data_field_8: this.props.route.params.item.data_field_8,
-        data_field_9: this.props.route.params.item.data_field_9,
-        data_field_10: this.props.route.params.item.data_field_10,
+        // collection_id: "",
+        data_field_1: "",
+        data_field_2: "",
+        data_field_3: "",
+        data_field_4: "",
+        data_field_5: "",
+        data_field_6: "",
+        data_field_7: "",
+        data_field_8: "",
+        data_field_9: "",
+        data_field_10: "",
 
     }
 
@@ -36,25 +37,49 @@ class EditItemForm extends Component {
     handleField9 = (text) => { this.setState({ data_field_9: text }) }
     handleField10 = (text) => { this.setState({ data_field_10: text }) }
 
-    handleSubmit = () => {
-
-        fetch("http://localhost:3000/items", {
-            method: "POST",
+    handleUpdate = () => {
+        fetch(`http://localhost:3000/items/${this.props.route.params.item.id}`, {
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify({ item: { ...this.state, collection_id: this.props.route.params.fields.collection_id } })
+            body: JSON.stringify({ item: this.state })
         })
     }
 
+    handleDelete = () => {
+        fetch(`http://localhost:3000/items/${this.props.route.params.item.id}`, {
+            method: "DELETE",
+        })
+    }
+
+    handleAddPhotos = () => {
+        ImagePicker.getCameraRollPermissionsAsync()
+        ImagePicker.launchImageLibraryAsync()
+    }
+
+
+    componentDidMount() {
+        this.setState({
+            // collection_id: this.props.route.params.fields.collection_id, 
+            data_field_1: this.props.route.params.item.data_field_1,
+            data_field_2: this.props.route.params.item.data_field_2,
+            data_field_3: this.props.route.params.item.data_field_3,
+            data_field_4: this.props.route.params.item.data_field_4,
+            data_field_5: this.props.route.params.item.data_field_5,
+            data_field_6: this.props.route.params.item.data_field_6,
+            data_field_7: this.props.route.params.item.data_field_7,
+            data_field_8: this.props.route.params.item.data_field_8,
+            data_field_9: this.props.route.params.item.data_field_9,
+            data_field_10: this.props.route.params.item.data_field_10,
+
+        })
+    }
 
     render() {
-        const { fields } = this.props.route.params
 
-        // componentDidMount(){
-        //     this.setState({collection_id: this.props.route.params.fields.collection_id})
-        // }
+
         const tableHead = ['Property', 'Value']
         const tableTitle = [
             this.props.route.params.fields.data_title_1,
@@ -69,16 +94,16 @@ class EditItemForm extends Component {
             this.props.route.params.fields.data_title_10
         ]
         const tableData = [
-            [<TextInput value={this.state.data_field_2} onChangeText={this.handleTitle} />],
-            [this.state.data_field_2],
-            [this.state.data_field_3],
-            [this.state.data_field_4],
-            [this.state.data_field_5],
-            [this.state.data_field_6],
-            [this.state.data_field_7],
-            [this.state.data_field_8],
-            [this.state.data_field_9],
-            [this.state.data_field_10],
+            [<TextInput value={this.state.data_field_1} onChangeText={this.handleField1} />],
+            [<TextInput value={this.state.data_field_2} onChangeText={this.handleField2} />],
+            [<TextInput value={this.state.data_field_3} onChangeText={this.handleField3} />],
+            [<TextInput value={this.state.data_field_4} onChangeText={this.handleField4} />],
+            [<TextInput value={this.state.data_field_5} onChangeText={this.handleField5} />],
+            [<TextInput value={this.state.data_field_6} onChangeText={this.handleField6} />],
+            [<TextInput value={this.state.data_field_7} onChangeText={this.handleField7} />],
+            [<TextInput value={this.state.data_field_8} onChangeText={this.handleField8} />],
+            [<TextInput value={this.state.data_field_9} onChangeText={this.handleField9} />],
+            [<TextInput value={this.state.data_field_10} onChangeText={this.handleField10} />],
         ]
 
         return (
@@ -89,6 +114,13 @@ class EditItemForm extends Component {
                     source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
                     resizeMode={'cover'} // cover or contain its upto you view look
                 />
+
+                <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={this.handleAddPhotos}>
+                    <Text style={styles.submitButtonText}> Add Image </Text>
+                </TouchableOpacity>
+
                 <View style={styles.container}>
                     <Table borderStyle={{ borderWidth: 1 }}>
                         <Row data={tableHead} flexArr={[1, 1]} style={styles.head} textStyle={styles.text} />
@@ -99,12 +131,20 @@ class EditItemForm extends Component {
                     </Table>
                 </View>
 
-                {/* 
+
+
+
                 <TouchableOpacity
-                style={styles.submitButton}
-                onPress={this.handleSubmit}>
-                <Text style={styles.submitButtonText}> Submit </Text>
-            </TouchableOpacity> */}
+                    style={styles.submitButton}
+                    onPress={this.handleUpdate}>
+                    <Text style={styles.submitButtonText}> Update </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={this.handleDelete}>
+                    <Text style={styles.submitButtonText}> Delete </Text>
+                </TouchableOpacity>
             </View>
         )
     }

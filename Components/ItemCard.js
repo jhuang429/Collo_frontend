@@ -2,7 +2,6 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, Button, TouchableHighlight } from 'react-native'
 
 export default function ItemCard(props) {
-    debugger
 
     // () => props.navigation.push('ItemEdit',{fields: fields, items: props.collection.items})
 
