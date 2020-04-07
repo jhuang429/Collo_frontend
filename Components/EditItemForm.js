@@ -9,7 +9,6 @@ class EditItemForm extends Component {
 
 
     state = {
-        image: null,
         title: '',
         // collection_id: "",
         data_field_1: "",
@@ -57,8 +56,7 @@ class EditItemForm extends Component {
 
     handleAddPhotos = () => {
         ImagePicker.getCameraRollPermissionsAsync()
-        ImagePicker.launchImageLibraryAsync().then(pic => this.setState({image: pic}))
-        
+        ImagePicker.launchImageLibraryAsync()
     }
 
 
@@ -110,52 +108,43 @@ class EditItemForm extends Component {
 
         return (
             <View>
+                <Image
+                    // onPress={() => navigation.push('ItemContainer')}
+                    style={{ width: 150, height: 150 }}
+                    source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
+                    resizeMode={'cover'} // cover or contain its upto you view look
+                />
 
-                {this.state.image ?
-                    <Image
-                        style={{ width: 150, height: 150 }}
-                        source={this.state.image}
-                        resizeMode={'cover'}
-                    />
-                    :
-                    <Image
-                        style={{ width: 150, height: 150 }}
-                        source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
-                        resizeMode={'cover'} 
-                /> }
+                <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={this.handleAddPhotos}>
+                    <Text style={styles.submitButtonText}> Add Image </Text>
+                </TouchableOpacity>
 
-
-
-                    <TouchableOpacity
-                        style={styles.submitButton}
-                        onPress={this.handleAddPhotos}>
-                        <Text style={styles.submitButtonText}> Add Image </Text>
-                    </TouchableOpacity>
-
-                    <View style={styles.container}>
-                        <Table borderStyle={{ borderWidth: 1 }}>
-                            <Row data={tableHead} flexArr={[1, 1]} style={styles.head} textStyle={styles.text} />
-                            <TableWrapper style={styles.wrapper}>
-                                <Col data={tableTitle} style={styles.title} heightArr={[28, 28]} textStyle={styles.text} />
-                                <Rows data={tableData} flexArr={[1, 1]} style={styles.row} textStyle={styles.text} />
-                            </TableWrapper>
-                        </Table>
-                    </View>
+                <View style={styles.container}>
+                    <Table borderStyle={{ borderWidth: 1 }}>
+                        <Row data={tableHead} flexArr={[1, 1]} style={styles.head} textStyle={styles.text} />
+                        <TableWrapper style={styles.wrapper}>
+                            <Col data={tableTitle} style={styles.title} heightArr={[28, 28]} textStyle={styles.text} />
+                            <Rows data={tableData} flexArr={[1, 1]} style={styles.row} textStyle={styles.text} />
+                        </TableWrapper>
+                    </Table>
+                </View>
 
 
 
 
-                    <TouchableOpacity
-                        style={styles.submitButton}
-                        onPress={this.handleUpdate}>
-                        <Text style={styles.submitButtonText}> Update </Text>
-                    </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={this.handleUpdate}>
+                    <Text style={styles.submitButtonText}> Update </Text>
+                </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.submitButton}
-                        onPress={this.handleDelete}>
-                        <Text style={styles.submitButtonText}> Delete </Text>
-                    </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={this.handleDelete}>
+                    <Text style={styles.submitButtonText}> Delete </Text>
+                </TouchableOpacity>
             </View>
         )
     }
