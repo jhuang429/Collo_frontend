@@ -1,15 +1,15 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 
-function Search() {
+function SignIn() {
     return (
         <View style={styles.container}>
-            <Text>Search</Text>
+            <Text>SignIn</Text>
         </View>
     )
 }
 
-export default Search
+export default SignIn
 
 const styles = StyleSheet.create({
     container: {
@@ -18,6 +18,4 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
 })
-
-
 
