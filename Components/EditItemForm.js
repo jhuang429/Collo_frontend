@@ -4,12 +4,12 @@ import Colors from '../Constants/colors'
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import * as ImagePicker from 'expo-image-picker';
 
-
 class EditItemForm extends Component {
 
 
     state = {
         title: '',
+        image: null,
         // collection_id: "",
         data_field_1: "",
         data_field_2: "",
@@ -56,13 +56,29 @@ class EditItemForm extends Component {
 
     handleAddPhotos = () => {
         ImagePicker.getCameraRollPermissionsAsync()
-        ImagePicker.launchImageLibraryAsync()
+        ImagePicker.launchImageLibraryAsync().then(img => this.setState({ image: img.uri }))
+
     }
 
+    handleUploadPhoto = () => {
+        let photo = { uri: this.state.image}
+        let formdata = new FormData();
+        formdata.append("image", {uri: photo.uri, name: `${this.props.route.params.item.id}.jpg`, type: 'image/jpeg'})
+
+        fetch(`http://localhost:3000/items/${this.props.route.params.item.id}/image`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            body: formdata
+        })
+    }
 
     componentDidMount() {
         this.setState({
-            // collection_id: this.props.route.params.fields.collection_id, 
+            // collection_id: this.props.route.params.fields.collection_id,
+            image: this.props.route.params.item.image,
+            title: this.props.route.params.item.title,
             data_field_1: this.props.route.params.item.data_field_1,
             data_field_2: this.props.route.params.item.data_field_2,
             data_field_3: this.props.route.params.item.data_field_3,
@@ -108,17 +124,34 @@ class EditItemForm extends Component {
 
         return (
             <View>
-                <Image
-                    // onPress={() => navigation.push('ItemContainer')}
-                    style={{ width: 150, height: 150 }}
-                    source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
-                    resizeMode={'cover'} // cover or contain its upto you view look
-                />
+
+
+                {this.state.image ?
+                    <Image
+                        // onPress={() => navigation.push('ItemContainer')}
+                        style={{ width: "100%", height: 150 }}
+                        source={{uri: this.state.image}}
+                        resizeMode={'cover'} // cover or contain its upto you view look
+                    /> :
+                    <Image
+                        // onPress={() => navigation.push('ItemContainer')}
+                        style={{ width: "100%", height: 150 }}
+                        source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
+                        resizeMode={'cover'} // cover or contain its upto you view look
+                    />}
+
+
 
                 <TouchableOpacity
                     style={styles.submitButton}
                     onPress={this.handleAddPhotos}>
                     <Text style={styles.submitButtonText}> Add Image </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={this.handleUploadPhoto}>
+                    <Text style={styles.submitButtonText}> upload photo </Text>
                 </TouchableOpacity>
 
                 <View style={styles.container}>
@@ -137,7 +170,7 @@ class EditItemForm extends Component {
                 <TouchableOpacity
                     style={styles.submitButton}
                     onPress={this.handleUpdate}>
-                    <Text style={styles.submitButtonText}> Update </Text>
+                    <Text style={styles.submitButtonText}> Update  Data</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity

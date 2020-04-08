@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import CollectionCard from '../Components/CollectionCard';
 
 
@@ -7,24 +7,28 @@ function Collections(props) {
 
     const [collections, setCollections] = useState([])
 
-  useEffect(() => {
-    fetch("http://localhost:3000/collections").then(resp => resp.json()).then(data => setCollections(data))
-  }, []
-  )
+    useEffect(() => {
+        fetch("http://localhost:3000/collections").then(resp => resp.json()).then(data => setCollections(data))
+    }, []
+    )
 
     return (
-        <View style={styles.screen}>
-            {collections.map(coll => <CollectionCard collection={coll} key={coll.id} navigation={props.navigation}/>)}
-        </View>
+            <ScrollView>
+                <View style={styles.screen}>
+                {collections.map(coll => <CollectionCard style={styles.CollectionCard} collection={coll} key={coll.id} navigation={props.navigation}/>)}
+                </View>
+             </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     screen: {
-        flex:1,
-        justifyContent: "center",
-        alignItems: "center",
-
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
+    CollectionCard: {
+        alignContent:"center"
     }
 })
 

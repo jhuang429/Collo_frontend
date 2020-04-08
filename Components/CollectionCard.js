@@ -12,12 +12,24 @@ export default function CollectionCard(props) {
             <View>
                 <Text>{title}</Text>
                 <TouchableHighlight onPress={() => props.navigation.push('ItemContainer',{fields: fields, items: props.collection.items, navigation: props.navigation})}>
-                <Image
+                
+                <View style={styles.thumbnail}>
+
+                {props.collection.items.slice(0,4).map(item=> item.image ? <Image
+                    key={item.id}
+                    style={{ width: "50%", height: "50%" }}
+                    source={{ uri: item.image }}
+                    resizeMode={'cover'} // cover or contain its upto you view look
+                /> : null
+                )}
+                </View>
+
+                {/* <Image
                     // onPress={() => navigation.push('ItemContainer')}
                     style={{ width: 150, height: 150 }}
                     source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
                     resizeMode={'cover'} // cover or contain its upto you view look
-                />
+                /> */}
                 </TouchableHighlight>
 
             </View>
@@ -32,6 +44,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
     },
+    thumbnail: {
+        width: 150, 
+        height: 150,
+        flexWrap: "wrap",
+    },
+
+   
 })
 
 

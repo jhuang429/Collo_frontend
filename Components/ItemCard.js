@@ -10,11 +10,21 @@ export default function ItemCard(props) {
             <View>
                 <Text>{props.item.title}</Text>
                 <TouchableHighlight onPress={() => props.nagivation.push('ItemEdit',{fields: props.fields, item: props.item})}>
+
+                {props.item.image ? 
                 <Image
                     style={{ width: 150, height: 150 }}
-                    source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
+                    source={{ uri: props.item.image }}
                     resizeMode={'cover'} // cover or contain its upto you view look
-                />
+                /> :
+
+                <Image
+                style={{ width: 150, height: 150 }}
+                source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
+                resizeMode={'cover'} // cover or contain its upto you view look
+            />
+
+}
                 </TouchableHighlight>
 
             </View>
