@@ -151,7 +151,7 @@ export default NewCollectionForm
 
 const styles = StyleSheet.create({
     screen: {
-        flex:1,
+        flex: 1,
         paddingTop: 50
     },
     input: {
