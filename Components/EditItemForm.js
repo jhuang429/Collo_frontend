@@ -46,6 +46,7 @@ class EditItemForm extends Component {
             },
             body: JSON.stringify({ item: this.state })
         })
+        this.props.route.params.nagivation.goBack()
     }
 
     handleDelete = () => {
@@ -61,15 +62,15 @@ class EditItemForm extends Component {
     }
 
     handleUploadPhoto = () => {
-        let photo = { uri: this.state.image}
+        let photo = { uri: this.state.image }
         let formdata = new FormData();
-        formdata.append("image", {uri: photo.uri, name: `${this.props.route.params.item.id}.jpg`, type: 'image/jpeg'})
+        formdata.append("image", { uri: photo.uri, name: `${this.props.route.params.item.id}.jpg`, type: 'image/jpeg' })
 
         fetch(`http://localhost:3000/items/${this.props.route.params.item.id}/image`, {
             method: "POST",
             headers: {
                 'Content-Type': 'multipart/form-data',
-              },
+            },
             body: formdata
         })
     }
@@ -130,7 +131,7 @@ class EditItemForm extends Component {
                     <Image
                         // onPress={() => navigation.push('ItemContainer')}
                         style={{ width: "100%", height: 150 }}
-                        source={{uri: this.state.image}}
+                        source={{ uri: this.state.image }}
                         resizeMode={'cover'} // cover or contain its upto you view look
                     /> :
                     <Image

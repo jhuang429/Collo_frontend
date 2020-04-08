@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Colors from '../Constants/colors'
+import * as ImagePicker from 'expo-image-picker';
 
 
 class NewItemForm extends Component {
 
 
     state = {
+        image: null,
         title: '',
         collection_id: "",
         data_field_1: null,
@@ -43,26 +45,64 @@ class NewItemForm extends Component {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify({ item: {...this.state, collection_id: this.props.route.params.fields.collection_id} })
+            body: JSON.stringify({ item: { ...this.state, collection_id: this.props.route.params.fields.collection_id } })
+        }).then(
+            resp=>resp.json()
+        ).then(
+            item => {
+                this.handleUploadPhoto(item)
+            }
+        )
+    }
+
+    handleAddPhotos = () => {
+        ImagePicker.getCameraRollPermissionsAsync()
+        ImagePicker.launchImageLibraryAsync().then(img => this.setState({ image: img.uri }))
+
+    }
+
+    handleUploadPhoto = (item) => {
+        let photo = { uri: this.state.image }
+        let formdata = new FormData();
+        formdata.append("image", { uri: photo.uri, name: `${item.id}.jpg`, type: 'image/jpeg' })
+
+        fetch(`http://localhost:3000/items/${item.id}/image`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            body: formdata
         })
     }
+
 
 
     render() {
         const { fields } = this.props.route.params
 
-        // componentDidMount(){
-        //     this.setState({collection_id: this.props.route.params.fields.collection_id})
-        // }
-
         return (
             <View>
-                                <Image
-                    // onPress={() => navigation.push('ItemContainer')}
-                    style={{ width: 150, height: 150 }}
-                    source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
-                    resizeMode={'cover'} // cover or contain its upto you view look
-                />
+                {this.state.image ?
+                    <Image
+                        // onPress={() => navigation.push('ItemContainer')}
+                        style={{ width: "100%", height: 150 }}
+                        source={{ uri: this.state.image }}
+                        resizeMode={'cover'} // cover or contain its upto you view look
+                    /> :
+                    <Image
+                        // onPress={() => navigation.push('ItemContainer')}
+                        style={{ width: "100%", height: 150 }}
+                        source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
+                        resizeMode={'cover'} // cover or contain its upto you view look
+                    />}
+
+
+                <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={this.handleAddPhotos}>
+                    <Text style={styles.submitButtonText}> Add Image </Text>
+                </TouchableOpacity>
+
                 <ScrollView style={styles.container}>
                     <TextInput style={styles.input}
                         underlineColorAndroid="transparent"

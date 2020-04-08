@@ -1,30 +1,30 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, Button, TouchableHighlight } from 'react-native'
 
-export default function ItemCard(props) {
+export default function ItemCard({ item, fields, nagivation }) {
 
     // () => props.navigation.push('ItemEdit',{fields: fields, items: props.collection.items})
 
     return (
         <View style={styles.container}>
             <View>
-                <Text>{props.item.title}</Text>
-                <TouchableHighlight onPress={() => props.nagivation.push('ItemEdit',{fields: props.fields, item: props.item})}>
+                <Text>{item.title}</Text>
+                <TouchableHighlight onPress={() => nagivation.push('ItemEdit', { fields: fields, item: item, nagivation: nagivation })}>
 
-                {props.item.image ? 
-                <Image
-                    style={{ width: 150, height: 150 }}
-                    source={{ uri: props.item.image }}
-                    resizeMode={'cover'} // cover or contain its upto you view look
-                /> :
+                    {item.image ?
+                        <Image
+                            style={{ width: 150, height: 150 }}
+                            source={{ uri: item.image }}
+                            resizeMode={'cover'} // cover or contain its upto you view look
+                        /> :
 
-                <Image
-                style={{ width: 150, height: 150 }}
-                source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
-                resizeMode={'cover'} // cover or contain its upto you view look
-            />
+                        <Image
+                            style={{ width: 150, height: 150 }}
+                            source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
+                            resizeMode={'cover'} // cover or contain its upto you view look
+                        />
 
-}
+                    }
                 </TouchableHighlight>
 
             </View>
