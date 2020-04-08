@@ -124,13 +124,13 @@ class EditItemForm extends Component {
         ]
 
         return (
-            <View>
+            <ScrollView>
 
 
                 {this.state.image ?
                     <Image
                         // onPress={() => navigation.push('ItemContainer')}
-                        style={{ width: "100%", height: 150 }}
+                        style={{ width: "100%", height: 300 }}
                         source={{ uri: this.state.image }}
                         resizeMode={'cover'} // cover or contain its upto you view look
                     /> :
@@ -179,7 +179,7 @@ class EditItemForm extends Component {
                     onPress={this.handleDelete}>
                     <Text style={styles.submitButtonText}> Delete </Text>
                 </TouchableOpacity>
-            </View>
+            </ScrollView>
         )
     }
 }
