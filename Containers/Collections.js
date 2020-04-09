@@ -27,8 +27,10 @@ function Collections(props) {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
+        margin:15,
         flexDirection: "row",
         flexWrap: "wrap",
+        justifyContent: "space-around"
     },
     CollectionCard: {
         alignContent:"center"
