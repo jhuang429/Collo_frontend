@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import Colors from '../Constants/colors'
+import { connect } from 'react-redux'
+import { createNewCollection } from '../src/actionCreators'
+
 
 class NewCollectionForm extends Component {
 
@@ -20,6 +23,12 @@ class NewCollectionForm extends Component {
         data_title_10: null
     }
 
+    clearState = () => {
+        this.setState({
+            title: ''
+        })
+    }
+
     handleTitle = (text) => { this.setState({ title: text }) }
     handleField1 = (text) => { this.setState({ data_title_1: text }) }
     handleField2 = (text) => { this.setState({ data_title_2: text }) }
@@ -33,17 +42,14 @@ class NewCollectionForm extends Component {
     handleField10 = (text) => { this.setState({ data_title_10: text }) }
 
     handleSubmit = () => {
-        fetch("http://localhost:3000/collections", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({ collection: this.state })
-        })
+        this.props.createNewCollection(this.state)
+        this.clearState()
+        this.props.navigation.navigate('My Collection')
+
     }
 
     data = [
+
         { value: 'Price' },
         { value: 'Date' },
         { value: 'Quantity' },
@@ -56,12 +62,15 @@ class NewCollectionForm extends Component {
         return (
             <View style={styles.screen}>
                 <ScrollView >
+
+
                     <TextInput style={styles.input}
                         underlineColorAndroid="transparent"
                         placeholder="Collection Title"
                         placeholderTextColor={Colors.primary}
                         autoCapitalize="none"
-                        onChangeText={this.handleTitle} />
+                        onChangeText={this.handleTitle}
+                        value={this.state.title} />
 
                     <Dropdown
                         label='Data Field 1'
@@ -147,7 +156,6 @@ class NewCollectionForm extends Component {
         )
     }
 }
-export default NewCollectionForm
 
 const styles = StyleSheet.create({
     screen: {
@@ -170,3 +178,15 @@ const styles = StyleSheet.create({
         color: 'white'
     }
 })
+
+const mdp = dispatch => {
+
+    return {
+        createNewCollection: (collection_obj) => dispatch(createNewCollection(collection_obj)),
+        test: () => dispatch({ type: "TEST" })
+    }
+}
+
+
+
+export default connect(null, mdp)(NewCollectionForm)
