@@ -20,7 +20,7 @@ function CollectionStack() {
             <Stack.Screen name="ItemCard" component={ItemCard} />
             <Stack.Screen name="ItemEdit" component={EditItemCard} />
             <Stack.Screen name="NewItemForm" component={NewItemForm} />
-            <Stack.Screen name="NewCollectionForm" component={NewCollectionForm} />
+            {/* <Stack.Screen name="NewCollectionForm" component={NewCollectionForm} /> */}
         </Stack.Navigator>
     );
 }

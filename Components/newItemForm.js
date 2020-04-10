@@ -45,9 +45,7 @@ class NewItemForm extends Component {
 
     handleSubmit = () => {
         this.props.createItem(this.state)
-        this.props.uploadImage()
-
-
+        this.props.navigation.goBack()
         // fetch("http://localhost:3000/items", {
         //     method: "POST",
         //     headers: {

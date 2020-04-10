@@ -11,7 +11,7 @@ export default function CollectionCard(props) {
         <View style={styles.container}>
             <View style={styles.subcontainer}>
                 <Text>{title}</Text>
-                <TouchableHighlight onPress={() => props.navigation.push('ItemContainer', { fields: fields, items: props.collection.items, navigation: props.navigation })}>
+                <TouchableHighlight onPress={() => props.navigation.push('ItemContainer', { fields: fields, navigation: props.navigation,collectionId:id })}>
 
                     <View style={styles.thumbnail}>
 

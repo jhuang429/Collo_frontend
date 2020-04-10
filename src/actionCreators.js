@@ -53,14 +53,6 @@ export const createItem = item_obj => dispatch => {
             'Content-Type': 'multipart/form-data',
         },
         body: formdata
-
-
-
-
-
-
-
-
     }).then(
         resp=>resp.json()
     )    .then(
@@ -68,14 +60,12 @@ export const createItem = item_obj => dispatch => {
             dispatch({ type: 'CREATE_ITEM', payload: { item: data } })
         }
     )
-
 }
 
 export const uploadImage = (itemID, imageUri) => dispatch => {
     let formdata = new FormData();
     formdata.append("image", { uri: imageUri, name: `${itemID}.jpg`, type: 'image/jpeg' })
-
-
+    
     fetch(`http://localhost:3000/items/${itemID}/image`, {
         method: "POST",
         headers: {
