@@ -62,11 +62,11 @@ export const createItem = item_obj => dispatch => {
     )
 }
 
-export const uploadImage = (itemID, imageUri) => dispatch => {
+export const uploadImage = (itemId, imageUri) => dispatch => {
     let formdata = new FormData();
-    formdata.append("image", { uri: imageUri, name: `${itemID}.jpg`, type: 'image/jpeg' })
+    formdata.append("image", { uri: imageUri, name: `${itemId}.jpg`, type: 'image/jpeg' })
     
-    fetch(`http://localhost:3000/items/${itemID}/image`, {
+    fetch(`http://localhost:3000/items/${itemId}/image`, {
         method: "POST",
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -76,11 +76,24 @@ export const uploadImage = (itemID, imageUri) => dispatch => {
     .then(resp => resp.json())
     .then(
         data  => {
-            dispatch({ type: 'UPLOAD_IMAGE', payload: { item: data } })
+            dispatch({ type: 'UPDATE_ITEM', payload: { item: data } })
         }
     )
 }
 
-// export const UPDATE_ITEM = item_obj => {
-
-// }
+export const updateItem = (itemId, item_obj) => dispatch => {
+    fetch(`http://localhost:3000/items/${itemId}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({ ...item_obj })
+    })
+    .then(resp => resp.json())
+    .then(
+        data  => {
+            dispatch({ type: 'UPDATE_ITEM', payload: { item: data } })
+        }
+    )
+}

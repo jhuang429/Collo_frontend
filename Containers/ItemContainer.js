@@ -3,21 +3,27 @@ import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 import CollectionCard from '../Components/CollectionCard';
 import ItemCard from '../Components/ItemCard';
 import { connect } from 'react-redux'
+import { useNavigation } from '@react-navigation/native';
 
 
 function ItemContainer({ route, collections }) {
 
+    const navigation = useNavigation()
+
+
+    navigation.setOptions({ title: route.params.collectionTitle })
+
     const [collectionId, setCollectionId] = useState(null)
 
     useEffect( 
-        ()=> setCollectionId(route.params.collectionId),[]
+        ()=> route.params.collectionId && setCollectionId(route.params.collectionId),[]
     )
 
     return (
         <ScrollView>
         <View style={styles.screen}>
              {collectionId && collections.find(coll=> coll.id == collectionId).items.map(item => (
-                    <ItemCard key={item.id} item={item} nagivation={route.params.navigation} fields={route.params.fields} />
+                    <ItemCard key={item.id} item={item} fields={route.params.fields} />
             ))}
         </View>
             <Button title="Add" onPress={() => { route.params.navigation.push('NewItemForm', { fields: route.params.fields }) }} />

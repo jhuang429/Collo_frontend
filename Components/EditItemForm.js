@@ -1,18 +1,17 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Colors from '../Constants/colors'
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import * as ImagePicker from 'expo-image-picker';
 import { connect } from 'react-redux'
-import { uploadImage} from '../src/actionCreators'
+import { uploadImage, updateItem } from '../src/actionCreators'
+import { useNavigation } from '@react-navigation/native';
 
-class EditItemForm extends Component {
-
-
-    state = {
+function EditItemForm(props) {
+    
+    
+    const [state, setState] = useState({
         title: '',
-        image: null,
-        // collection_id: "",
         data_field_1: "",
         data_field_2: "",
         data_field_3: "",
@@ -23,168 +22,155 @@ class EditItemForm extends Component {
         data_field_8: "",
         data_field_9: "",
         data_field_10: "",
+    })
 
+    const [image, setImage] = useState(null)
+    const navigation = useNavigation()
+    navigation.setOptions({ title: state.title })
+
+    const handleTitle = (text) => { setState({ ...state, title: text }) }
+    const handleField1 = (text) => { setState({ ...state, data_field_1: text }) }
+    const handleField2 = (text) => { setState({ ...state, data_field_2: text }) }
+    const handleField3 = (text) => { setState({ ...state, data_field_3: text }) }
+    const handleField4 = (text) => { setState({ ...state, data_field_4: text }) }
+    const handleField5 = (text) => { setState({ ...state, data_field_5: text }) }
+    const handleField6 = (text) => { setState({ ...state, data_field_6: text }) }
+    const handleField7 = (text) => { setState({ ...state, data_field_7: text }) }
+    const handleField8 = (text) => { setState({ ...state, data_field_8: text }) }
+    const handleField9 = (text) => { setState({ ...state, data_field_9: text }) }
+    const handleField10 = (text) => { setState({ ...state, data_field_10: text }) }
+
+
+
+    const { item, fields } = props.route.params
+
+    const handleUpdate = () => {
+        props.updateItem(item.id, {...state})
+        // fetch(`http://localhost:3000/items/${item.id}`, {
+        //     method: "PATCH",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Accept": "application/json"
+        //     },
+        //     body: JSON.stringify({ ...state })
+        // })
+        navigation.goBack()
     }
 
-
-    handleTitle = (text) => { this.setState({ title: text }) }
-    handleField1 = (text) => { this.setState({ data_field_1: text }) }
-    handleField2 = (text) => { this.setState({ data_field_2: text }) }
-    handleField3 = (text) => { this.setState({ data_field_3: text }) }
-    handleField4 = (text) => { this.setState({ data_field_4: text }) }
-    handleField5 = (text) => { this.setState({ data_field_5: text }) }
-    handleField6 = (text) => { this.setState({ data_field_6: text }) }
-    handleField7 = (text) => { this.setState({ data_field_7: text }) }
-    handleField8 = (text) => { this.setState({ data_field_8: text }) }
-    handleField9 = (text) => { this.setState({ data_field_9: text }) }
-    handleField10 = (text) => { this.setState({ data_field_10: text }) }
-
-    handleUpdate = () => {
-        fetch(`http://localhost:3000/items/${this.props.route.params.item.id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({ item: this.state })
-        })
-        this.props.route.params.nagivation.goBack()
-    }
-
-    handleDelete = () => {
-        fetch(`http://localhost:3000/items/${this.props.route.params.item.id}`, {
+    const handleDelete = () => {
+        fetch(`http://localhost:3000/items/${item.id}`, {
             method: "DELETE",
         })
     }
 
-    handleAddPhotos = () => {
+    const handleAddPhotos = () => {
         ImagePicker.getCameraRollPermissionsAsync()
-        ImagePicker.launchImageLibraryAsync().then(img => this.setState({ image: img.uri }))
-
+        ImagePicker.launchImageLibraryAsync().then(img => setImage(img.uri ))
     }
 
-    handleUploadPhoto = () => {
-        this.props.uploadImage(this.props.route.params.item.id, this.state.image)
-        // let photo = { uri: this.state.image }
-        // let formdata = new FormData();
-        // formdata.append("image", { uri: photo.uri, name: `${this.props.route.params.item.id}.jpg`, type: 'image/jpeg' })
-
-        // fetch(`http://localhost:3000/items/${this.props.route.params.item.id}/image`, {
-        //     method: "POST",
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data',
-        //     },
-        //     body: formdata
-        // })
+    const handleUploadPhoto = () => {
+        props.uploadImage(item.id, image)
     }
 
-    componentDidMount() {
-        this.setState({
-            // collection_id: this.props.route.params.fields.collection_id,
-            image: this.props.route.params.item.image,
-            title: this.props.route.params.item.title,
-            data_field_1: this.props.route.params.item.data_field_1,
-            data_field_2: this.props.route.params.item.data_field_2,
-            data_field_3: this.props.route.params.item.data_field_3,
-            data_field_4: this.props.route.params.item.data_field_4,
-            data_field_5: this.props.route.params.item.data_field_5,
-            data_field_6: this.props.route.params.item.data_field_6,
-            data_field_7: this.props.route.params.item.data_field_7,
-            data_field_8: this.props.route.params.item.data_field_8,
-            data_field_9: this.props.route.params.item.data_field_9,
-            data_field_10: this.props.route.params.item.data_field_10,
+    useEffect(
+        () =>
+            setState({
+                title: item.title,
+                data_field_1: item.data_field_1,
+                data_field_2: item.data_field_2,
+                data_field_3: item.data_field_3,
+                data_field_4: item.data_field_4,
+                data_field_5: item.data_field_5,
+                data_field_6: item.data_field_6,
+                data_field_7: item.data_field_7,
+                data_field_8: item.data_field_8,
+                data_field_9: item.data_field_9,
+                data_field_10: item.data_field_10,
+            }), []
+    )
 
-        })
-    }
-
-    render() {
-
-
-        const tableHead = ['Property', 'Value']
-        const tableTitle = [
-            this.props.route.params.fields.data_title_1,
-            this.props.route.params.fields.data_title_2,
-            this.props.route.params.fields.data_title_3,
-            this.props.route.params.fields.data_title_4,
-            this.props.route.params.fields.data_title_5,
-            this.props.route.params.fields.data_title_6,
-            this.props.route.params.fields.data_title_7,
-            this.props.route.params.fields.data_title_8,
-            this.props.route.params.fields.data_title_9,
-            this.props.route.params.fields.data_title_10
-        ]
-        const tableData = [
-            [<TextInput value={this.state.data_field_1} onChangeText={this.handleField1} />],
-            [<TextInput value={this.state.data_field_2} onChangeText={this.handleField2} />],
-            [<TextInput value={this.state.data_field_3} onChangeText={this.handleField3} />],
-            [<TextInput value={this.state.data_field_4} onChangeText={this.handleField4} />],
-            [<TextInput value={this.state.data_field_5} onChangeText={this.handleField5} />],
-            [<TextInput value={this.state.data_field_6} onChangeText={this.handleField6} />],
-            [<TextInput value={this.state.data_field_7} onChangeText={this.handleField7} />],
-            [<TextInput value={this.state.data_field_8} onChangeText={this.handleField8} />],
-            [<TextInput value={this.state.data_field_9} onChangeText={this.handleField9} />],
-            [<TextInput value={this.state.data_field_10} onChangeText={this.handleField10} />],
-        ]
-
-        return (
-            <ScrollView>
+    useEffect(
+        ()=> setImage(item.image), []
+    )
 
 
-                {this.state.image ?
-                    <Image
-                        // onPress={() => navigation.push('ItemContainer')}
-                        style={{ width: "100%", height: 300 }}
-                        source={{ uri: this.state.image }}
-                        resizeMode={'cover'} // cover or contain its upto you view look
-                    /> :
-                    <Image
-                        // onPress={() => navigation.push('ItemContainer')}
-                        style={{ width: "100%", height: 150 }}
-                        source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
-                        resizeMode={'cover'} // cover or contain its upto you view look
-                    />}
+    const tableHead = ['Property', 'Value']
+    const tableTitle = [
+        "Name",
+        fields.data_title_1,
+        fields.data_title_2,
+        fields.data_title_3,
+        fields.data_title_4,
+        fields.data_title_5,
+        fields.data_title_6,
+        fields.data_title_7,
+        fields.data_title_8,
+        fields.data_title_9,
+        fields.data_title_10
+    ]
+    const tableData = [
+        [<TextInput value={state.title} onChangeText={handleTitle} />],
+        [<TextInput value={state.data_field_1} onChangeText={handleField1} />],
+        [<TextInput value={state.data_field_2} onChangeText={handleField2} />],
+        [<TextInput value={state.data_field_3} onChangeText={handleField3} />],
+        [<TextInput value={state.data_field_4} onChangeText={handleField4} />],
+        [<TextInput value={state.data_field_5} onChangeText={handleField5} />],
+        [<TextInput value={state.data_field_6} onChangeText={handleField6} />],
+        [<TextInput value={state.data_field_7} onChangeText={handleField7} />],
+        [<TextInput value={state.data_field_8} onChangeText={handleField8} />],
+        [<TextInput value={state.data_field_9} onChangeText={handleField9} />],
+        [<TextInput value={state.data_field_10} onChangeText={handleField10} />],
+    ]
 
+    return (
+        <ScrollView>
+            {image ?
+                <Image
+                    style={{ width: "100%", height: 300 }}
+                    source={{ uri: image }}
+                    resizeMode={'cover'} // cover or contain its upto you view look
+                /> :
+                <Image
+                    style={{ width: "100%", height: 150 }}
+                    source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
+                    resizeMode={'cover'} // cover or contain its upto you view look
+                />}
 
+            <TouchableOpacity
+                style={styles.submitButton}
+                onPress={handleAddPhotos}>
+                <Text style={styles.submitButtonText}> Add Image </Text>
+            </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.submitButton}
-                    onPress={this.handleAddPhotos}>
-                    <Text style={styles.submitButtonText}> Add Image </Text>
-                </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.submitButton}
+                onPress={handleUploadPhoto}>
+                <Text style={styles.submitButtonText}> upload photo </Text>
+            </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.submitButton}
-                    onPress={this.handleUploadPhoto}>
-                    <Text style={styles.submitButtonText}> upload photo </Text>
-                </TouchableOpacity>
+            <View style={styles.container}>
+                <Table borderStyle={{ borderWidth: 1 }}>
+                    <Row data={tableHead} flexArr={[1, 1]} style={styles.head} textStyle={styles.text} />
+                    <TableWrapper style={styles.wrapper}>
+                        <Col data={tableTitle} style={styles.title} heightArr={[28, 28]} textStyle={styles.text} />
+                        <Rows data={tableData} flexArr={[1, 1]} style={styles.row} textStyle={styles.text} />
+                    </TableWrapper>
+                </Table>
+            </View>
 
-                <View style={styles.container}>
-                    <Table borderStyle={{ borderWidth: 1 }}>
-                        <Row data={tableHead} flexArr={[1, 1]} style={styles.head} textStyle={styles.text} />
-                        <TableWrapper style={styles.wrapper}>
-                            <Col data={tableTitle} style={styles.title} heightArr={[28, 28]} textStyle={styles.text} />
-                            <Rows data={tableData} flexArr={[1, 1]} style={styles.row} textStyle={styles.text} />
-                        </TableWrapper>
-                    </Table>
-                </View>
+            <TouchableOpacity
+                style={styles.submitButton}
+                onPress={handleUpdate}>
+                <Text style={styles.submitButtonText}> Update Data</Text>
+            </TouchableOpacity>
 
-
-
-
-                <TouchableOpacity
-                    style={styles.submitButton}
-                    onPress={this.handleUpdate}>
-                    <Text style={styles.submitButtonText}> Update  Data</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.submitButton}
-                    onPress={this.handleDelete}>
-                    <Text style={styles.submitButtonText}> Delete </Text>
-                </TouchableOpacity>
-            </ScrollView>
-        )
-    }
+            <TouchableOpacity
+                style={styles.submitButton}
+                onPress={handleDelete}>
+                <Text style={styles.submitButtonText}> Delete </Text>
+            </TouchableOpacity>
+        </ScrollView>
+    )
 }
 
 
@@ -215,6 +201,7 @@ const styles = StyleSheet.create({
 const mdp = (dispatch) => {
     return {
         uploadImage: (itemId, imageUri) => dispatch(uploadImage(itemId, imageUri)),
+        updateItem: (itemId, item_obj) => dispatch(updateItem(itemId, item_obj)),
     }
 }
 

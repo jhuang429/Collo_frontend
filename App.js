@@ -10,6 +10,7 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { reducer } from './src/reducer'
+import ErrorBoundary from 'react-native-error-boundary'
 
 
 export default function App() {
@@ -19,16 +20,18 @@ export default function App() {
   const store = createStore(reducer, applyMiddleware(thunk))
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Welcome" component={Welcome} />
-          <Stack.Screen name="SignIn" component={SignIn} />
-          <Stack.Screen name="SignUp" component={SignUp} />
-          <Stack.Screen name="MainApp" component={MainApp} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Welcome" component={Welcome} />
+            <Stack.Screen name="SignIn" component={SignIn} />
+            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="MainApp" component={MainApp} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+    </ErrorBoundary>
   );
 }
 

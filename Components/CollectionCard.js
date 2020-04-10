@@ -1,7 +1,11 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, Button, TouchableHighlight } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function CollectionCard(props) {
+
+    const navigation = useNavigation()
 
     const { title, id, data_title_1, data_title_2, data_title_3, data_title_4, data_title_5, data_title_6, data_title_7, data_title_8, data_title_9, data_title_10 } = props.collection
 
@@ -11,12 +15,10 @@ export default function CollectionCard(props) {
         <View style={styles.container}>
             <View style={styles.subcontainer}>
                 <Text>{title}</Text>
-                <TouchableHighlight onPress={() => props.navigation.push('ItemContainer', { fields: fields, navigation: props.navigation,collectionId:id })}>
+                <TouchableHighlight onPress={() => navigation.push('ItemContainer', { fields: fields, collectionId:id, collectionTitle: title })}>
 
                     <View style={styles.thumbnail}>
-
                         {props.collection.items[0] ?
-
                             props.collection.items.slice(0, 4).map(item => item.image ? <Image
                                 key={item.id}
                                 style={{ width: "50%", height: "50%" }}
@@ -32,15 +34,7 @@ export default function CollectionCard(props) {
                             />
                         }
                     </View>
-
-                    {/* <Image
-                    // onPress={() => navigation.push('ItemContainer')}
-                    style={{ width: 150, height: 150 }}
-                    source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
-                    resizeMode={'cover'} // cover or contain its upto you view look
-                /> */}
                 </TouchableHighlight>
-
             </View>
         </View>
     )

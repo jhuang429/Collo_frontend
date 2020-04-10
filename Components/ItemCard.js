@@ -1,15 +1,16 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, Button, TouchableHighlight } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
-export default function ItemCard({ item, fields, nagivation }) {
+export default function ItemCard({ item, fields }) {
 
-    // () => props.navigation.push('ItemEdit',{fields: fields, items: props.collection.items})
+    const navigation = useNavigation()
 
     return (
         <View style={styles.container}>
             <View>
                 <Text>{item.title}</Text>
-                <TouchableHighlight onPress={() => nagivation.push('ItemEdit', { fields: fields, item: item, nagivation: nagivation })}>
+                <TouchableHighlight onPress={() => navigation.push('ItemEdit', { fields: fields, item: item})}>
 
                     {item.image ?
                         <Image

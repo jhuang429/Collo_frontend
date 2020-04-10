@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
 function CollectionStack() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Collections" component={Collections} />
+            <Stack.Screen name="Collections" component={Collections} options={{ title: 'My Collection' }} />
             <Stack.Screen name="ItemContainer" component={ItemContainer} />
             <Stack.Screen name="ItemCard" component={ItemCard} />
             <Stack.Screen name="ItemEdit" component={EditItemCard} />
