@@ -26,7 +26,7 @@ function ItemContainer({ route, collections }) {
                     <ItemCard key={item.id} item={item} fields={route.params.fields} />
             ))}
         </View>
-            <Button title="Add" onPress={() => { route.params.navigation.push('NewItemForm', { fields: route.params.fields }) }} />
+            <Button title="Add" onPress={() => { navigation.push('NewItemForm', { fields: route.params.fields }) }} />
      </ScrollView>
     )
 }
