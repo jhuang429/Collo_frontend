@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Image 
 import Colors from '../Constants/colors'
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import * as ImagePicker from 'expo-image-picker';
+import { connect } from 'react-redux'
+import { uploadImage} from '../src/actionCreators'
 
 class EditItemForm extends Component {
 
@@ -62,17 +64,18 @@ class EditItemForm extends Component {
     }
 
     handleUploadPhoto = () => {
-        let photo = { uri: this.state.image }
-        let formdata = new FormData();
-        formdata.append("image", { uri: photo.uri, name: `${this.props.route.params.item.id}.jpg`, type: 'image/jpeg' })
+        this.props.uploadImage(this.props.route.params.item.id, this.state.image)
+        // let photo = { uri: this.state.image }
+        // let formdata = new FormData();
+        // formdata.append("image", { uri: photo.uri, name: `${this.props.route.params.item.id}.jpg`, type: 'image/jpeg' })
 
-        fetch(`http://localhost:3000/items/${this.props.route.params.item.id}/image`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-            body: formdata
-        })
+        // fetch(`http://localhost:3000/items/${this.props.route.params.item.id}/image`, {
+        //     method: "POST",
+        //     headers: {
+        //         'Content-Type': 'multipart/form-data',
+        //     },
+        //     body: formdata
+        // })
     }
 
     componentDidMount() {
@@ -185,8 +188,6 @@ class EditItemForm extends Component {
 }
 
 
-export default EditItemForm
-
 const styles = StyleSheet.create({
     input: {
         margin: 5,
@@ -211,3 +212,11 @@ const styles = StyleSheet.create({
     text: { textAlign: 'center' }
 })
 
+const mdp = (dispatch) => {
+    return {
+        uploadImage: (itemId, imageUri) => dispatch(uploadImage(itemId, imageUri)),
+    }
+}
+
+
+export default connect(null, mdp)(EditItemForm)

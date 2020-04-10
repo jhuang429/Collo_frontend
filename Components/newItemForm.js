@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Colors from '../Constants/colors'
 import * as ImagePicker from 'expo-image-picker';
+import { connect } from 'react-redux'
+import { uploadImage, createItem } from '../src/actionCreators'
 
 
 class NewItemForm extends Component {
@@ -37,22 +39,29 @@ class NewItemForm extends Component {
     handleField9 = (text) => { this.setState({ data_field_9: text }) }
     handleField10 = (text) => { this.setState({ data_field_10: text }) }
 
-    handleSubmit = () => {
+    componentDidMount() {
+        this.setState({ collection_id: this.props.route.params.fields.collection_id })
+    }
 
-        fetch("http://localhost:3000/items", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({ item: { ...this.state, collection_id: this.props.route.params.fields.collection_id } })
-        }).then(
-            resp=>resp.json()
-        ).then(
-            item => {
-                this.handleUploadPhoto(item)
-            }
-        )
+    handleSubmit = () => {
+        this.props.createItem(this.state)
+        this.props.uploadImage()
+
+
+        // fetch("http://localhost:3000/items", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Accept": "application/json"
+        //     },
+        //     body: JSON.stringify({ item: this.state })
+        // }).then(
+        //     resp => resp.json()
+        // ).then(
+        //     item => {
+        //         this.props.uploadImage(item.id, this.state.image)
+        //     }
+        // )
     }
 
     handleAddPhotos = () => {
@@ -61,19 +70,19 @@ class NewItemForm extends Component {
 
     }
 
-    handleUploadPhoto = (item) => {
-        let photo = { uri: this.state.image }
-        let formdata = new FormData();
-        formdata.append("image", { uri: photo.uri, name: `${item.id}.jpg`, type: 'image/jpeg' })
+    // handleUploadPhoto = (item) => {
+    //     let photo = { uri: this.state.image }
+    //     let formdata = new FormData();
+    //     formdata.append("image", { uri: photo.uri, name: `${item.id}.jpg`, type: 'image/jpeg' })
 
-        fetch(`http://localhost:3000/items/${item.id}/image`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-            body: formdata
-        })
-    }
+    //     fetch(`http://localhost:3000/items/${item.id}/image`, {
+    //         method: "POST",
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data',
+    //         },
+    //         body: formdata
+    //     })
+    // }
 
 
 
@@ -194,7 +203,6 @@ class NewItemForm extends Component {
         )
     }
 }
-export default NewItemForm
 
 const styles = StyleSheet.create({
     container: {
@@ -216,3 +224,12 @@ const styles = StyleSheet.create({
     }
 })
 
+const mdp = (dispatch) => {
+    return {
+        uploadImage: (itemId, imageUri) => dispatch(uploadImage(itemId, imageUri)),
+        createItem: (item_obj) => dispatch(createItem(item_obj)),
+    }
+}
+
+
+export default connect(null, mdp)(NewItemForm)

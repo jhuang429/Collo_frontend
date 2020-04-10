@@ -183,7 +183,6 @@ const mdp = dispatch => {
 
     return {
         createNewCollection: (collection_obj) => dispatch(createNewCollection(collection_obj)),
-        test: () => dispatch({ type: "TEST" })
     }
 }
 
