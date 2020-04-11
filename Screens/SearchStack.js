@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 function SearchStack() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Search" component={Search} />
+            <Stack.Screen name="Search" component={SearchContainer} />
             <Stack.Screen name="ItemContainer" component={ItemContainer} />
         </Stack.Navigator>
     );
