@@ -3,9 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import NewCollectionForm from './NewCollectionForm';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Settings from './Settings'
-import Search from './Search'
 import { Ionicons } from '@expo/vector-icons';
 import CollectionStack from './CollectionStack';
+import SearchStack from './SearchStack';
+
 
 
 export default function MainApp() {
@@ -41,7 +42,7 @@ export default function MainApp() {
         >
           <Tab.Screen name="My Collection" component={CollectionStack} />
           <Tab.Screen name="New" component={NewCollectionForm} />
-          <Tab.Screen name="Search" component={Search} />
+          <Tab.Screen name="Search" component={SearchStack} />
           <Tab.Screen name="Settings" component={Settings} />
         </Tab.Navigator>
   );

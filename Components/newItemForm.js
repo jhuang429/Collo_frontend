@@ -5,7 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { connect } from 'react-redux'
 import { uploadImage, createItem } from '../src/actionCreators'
 import { useNavigation } from '@react-navigation/native';
-
+import { SearchBar } from 'react-native-elements';
 
 
 function NewItemForm(props) {
@@ -76,6 +76,7 @@ const handleAddPhotos = () => {
 
     return (
         <View>
+            
             {state.image ?
                 <Image
 

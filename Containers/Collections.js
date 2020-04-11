@@ -3,23 +3,38 @@ import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import CollectionCard from '../Components/CollectionCard';
 import { connect } from 'react-redux'
 import { fetchCollections } from '../src/actionCreators'
+import { SearchBar } from 'react-native-elements';
+
 
 
 function Collections(props) {
 
-    // const [collections, setCollections] = useState([])
+    const [search, setSearch] = useState("")
+
+    const updateSearch = search => {
+        setSearch(search.toLowerCase() );
+    };
 
     useEffect(() => {
         props.fetchCollections()
-        // fetch("http://localhost:3000/collections").then(resp => resp.json()).then(data => setCollections(data))
     }, []
     )
-
+    
     return (
         <ScrollView>
+        <SearchBar
+            placeholder="Search Collections"
+            onChangeText={updateSearch}
+            value={search}
+            lightTheme ={true}
+            containerStyle={{backgroundColor:"white"}}
+            inputContainerStyle={{backgroundColor:"white"}}
+        />
             <View style={styles.screen}>
                 {props.collections.length > 0 ?
-                    props.collections.map(coll => <CollectionCard style={styles.CollectionCard} collection={coll} key={coll.id} />)
+                    props.collections.filter(coll=> coll.title.toLowerCase().includes(search))
+                    
+                    .map(coll => <CollectionCard style={styles.CollectionCard} collection={coll} key={coll.id} />)
                     :
                     <Text>No Collections</Text>}
             </View>
