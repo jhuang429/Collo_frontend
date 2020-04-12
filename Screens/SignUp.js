@@ -1,5 +1,8 @@
 import React, { Component, useState } from "react";
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Alert } from 'react-native'
+import {connect} from 'react-redux'
+import { signUp } from '../src/actionCreators'
+
 import {
     Container,
     Header,
@@ -20,7 +23,7 @@ import colors from '../Constants/colors'
 import { useNavigation } from '@react-navigation/native';
 
 
-function SignUp() {
+function SignUp(props) {
     const navigation = useNavigation()
     const [form, setForm] = useState({
         username: "",
@@ -41,6 +44,21 @@ function SignUp() {
     }
     const handleEmail = (text) =>{
         setForm(prevState=> ({...prevState, email: text}))
+    }
+
+    const handleSubmit = () =>{
+        if (form.username == ""){
+           return Alert.alert("Username cannot be blank")
+        }
+        else if(form.password !== form.passwordConfirmation){
+            return Alert.alert("Passwords do not match")
+        }
+        else if(!form.email.includes(".com") || !form.email.includes("@")){
+            return Alert.alert("Must be valid email")
+        }
+        else{
+            props.signUp({username: form.username, password:form.password})
+        }
     }
 
 
@@ -77,7 +95,7 @@ function SignUp() {
                         <Input email value={form.email} onChangeText={handleEmail}/>
                     </Item>
                 </Form>
-                <Button block style={{ margin: 15, marginTop: 50, color: "white x " }}>
+                <Button block style={{ margin: 15, marginTop: 50, color: "white x " }} onPress={handleSubmit}>
                     <Text>Create New Account</Text>
                 </Button>
                 <Text style={{ marginTop: 50, marginLeft: 20 }} onPress={() => navigation.goBack()}>Already have an Account? Sign In </Text>
@@ -87,7 +105,6 @@ function SignUp() {
     );
 }
 
-export default SignUp
 
 const styles = StyleSheet.create({
     container: {
@@ -95,4 +112,15 @@ const styles = StyleSheet.create({
     }
 });
 
+const mdp = dispatch => {
+    return {
+        signUp: (form)=>dispatch(signUp(form))
+    }
+}
+
+
+
+
+
+export default connect(null,mdp)(SignUp)
 

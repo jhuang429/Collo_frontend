@@ -1,6 +1,8 @@
 
+const api = "http://localhost:3000"
+
 export const fetchCollections = () => dispatch => {
-    fetch("http://localhost:3000/collections")
+    fetch(`${api}/collections`)
         .then(resp => resp.json())
         .then(data => {
             dispatch({ type: 'FETCH_COLLECTIONS', payload: { collections: data } })
@@ -9,7 +11,7 @@ export const fetchCollections = () => dispatch => {
 }
 
 export const createNewCollection = (collection_obj) => dispatch => {
-    fetch("http://localhost:3000/collections", {
+    fetch(`${api}/collections`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -30,7 +32,7 @@ export const createNewCollection = (collection_obj) => dispatch => {
 
 export const createItem = item_obj => dispatch => {
     
-    // fetch("http://localhost:3000/items", {
+    // fetch(`${api}/items`, {
     //     method: "POST",
     //     headers: {
     //         "Content-Type": "application/json",
@@ -47,8 +49,8 @@ export const createItem = item_obj => dispatch => {
 
 
 
-    fetch(`http://localhost:3000/items`, {
-        method: "POST",
+    fetch(`${api}/items`, {
+        method: `POST`,
         headers: {
             'Content-Type': 'multipart/form-data',
         },
@@ -66,7 +68,7 @@ export const uploadImage = (itemId, imageUri) => dispatch => {
     let formdata = new FormData();
     formdata.append("image", { uri: imageUri, name: `${itemId}.jpg`, type: 'image/jpeg' })
     
-    fetch(`http://localhost:3000/items/${itemId}/image`, {
+    fetch(`${api}/items/${itemId}/image`, {
         method: "POST",
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -82,7 +84,7 @@ export const uploadImage = (itemId, imageUri) => dispatch => {
 }
 
 export const updateItem = (itemId, item_obj) => dispatch => {
-    fetch(`http://localhost:3000/items/${itemId}`, {
+    fetch(`${api}/items/${itemId}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -99,7 +101,7 @@ export const updateItem = (itemId, item_obj) => dispatch => {
 }
 
 export const signUp = (form) => dispatch => {
-    fetch(`http://localhost:3000/login`, {
+    fetch(`${api}/signup`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -107,16 +109,16 @@ export const signUp = (form) => dispatch => {
         },
         body: JSON.stringify(form)
     })
-    .then(resp => resp.json())
-    .then(
-        data  => {
-            dispatch({ type: 'SIGN_UP', payload: { item: data } })
-        }
-    )
+    // .then(resp => resp.json())
+    // .then(
+    //     data  => {
+    //         dispatch({ type: 'SIGN_UP', payload: { form } })
+    //     }
+    // )
 }
 
 export const signIn = (form) => dispatch => {
-    fetch(`http://localhost:3000/items/${itemId}`, {
+    fetch(`${api}/items/${itemId}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -124,10 +126,10 @@ export const signIn = (form) => dispatch => {
         },
         body: JSON.stringify(form)
     })
-    .then(resp => resp.json())
-    .then(
-        data  => {
-            dispatch({ type: 'SIGN_IN', payload: { item: data } })
-        }
-    )
+    // .then(resp => resp.json())
+    // .then(
+    //     data  => {
+    //         dispatch({ type: 'SIGN_IN', payload: { form } })
+    //     }
+    // )
 }
