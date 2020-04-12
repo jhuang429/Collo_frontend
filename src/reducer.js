@@ -1,5 +1,6 @@
 const initialState = {
-    collections: []
+    collections: [],
+    currentUser: null
 }
 
 export const reducer = (prevState = initialState, action) => {
@@ -21,6 +22,12 @@ export const reducer = (prevState = initialState, action) => {
             coll.items = [...otherItems, action.payload.item]
             otherCollections = prevState.collections.filter(coll => coll.id !== action.payload.item.collection_id)
             return { ...prevState, collections: [...otherCollections, coll] }
+        case 'SIGN_UP':
+
+            return { ...prevState}
+            
+        case 'SIGN_IN':
+            return { ...prevState}
         default:
             return prevState
     }

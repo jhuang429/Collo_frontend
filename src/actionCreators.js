@@ -97,3 +97,37 @@ export const updateItem = (itemId, item_obj) => dispatch => {
         }
     )
 }
+
+export const signUp = (form) => dispatch => {
+    fetch(`http://localhost:3000/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(form)
+    })
+    .then(resp => resp.json())
+    .then(
+        data  => {
+            dispatch({ type: 'SIGN_UP', payload: { item: data } })
+        }
+    )
+}
+
+export const signIn = (form) => dispatch => {
+    fetch(`http://localhost:3000/items/${itemId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(form)
+    })
+    .then(resp => resp.json())
+    .then(
+        data  => {
+            dispatch({ type: 'SIGN_IN', payload: { item: data } })
+        }
+    )
+}
