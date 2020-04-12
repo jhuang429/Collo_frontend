@@ -1,8 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
-import { SearchBar, Card, ListItem, Button, Icon } from 'react-native-elements';
+import { StyleSheet, View, Image, ScrollView } from 'react-native';
+import { SearchBar, Card } from 'react-native-elements';
 import { connect } from 'react-redux'
 import CollectionCard from '../Components/CollectionCard';
+import {
+    Container,
+    Header,
+    Title,
+    Content,
+    Button,
+    Icon,
+    List,
+    ListItem,
+    Text,
+    Thumbnail,
+    Left,
+    Body,
+    Right,
+    H1
+} from "native-base";
 
 
 function SearchContainer(props) {
@@ -12,16 +28,20 @@ function SearchContainer(props) {
         setSearch(search.toLowerCase());
     };
 
+    const [items, setItems] = useState([])
 
-    const users = [
-        {
-           name: 'brynn',
-           avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
-        }
-       ]
+    useEffect(() => {
+    let array = []
+    props.collections.forEach(coll => {
+        coll.items.forEach(item => array.push(item))
+        setItems(array)
+    }
+    )},[])
+
 
     return (
-        <ScrollView>
+
+        <Container style={styles.container}>
             <SearchBar
                 placeholder="Search"
                 onChangeText={updateSearch}
@@ -31,58 +51,73 @@ function SearchContainer(props) {
                 inputContainerStyle={{ backgroundColor: "white" }}
             />
 
-<Card title="CARD WITH DIVIDER">
-  {
-    users.map((u, i) => {
-      return (
-        <View key={i} >
-          <Image
-            resizeMode="cover"
-            source={{ uri: u.avatar }}
-          />
-          <Text style={styles.name}>{u.name}</Text>
-        </View>
-      );
-    })
-  }
-</Card>
+            <Content>
+                <H1 style={styles.mb10}>Items</H1>
+                <List>
+                    {items.filter(coll=> coll.title.toLowerCase().includes(search)).map((item, i) => (
+                        <ListItem thumbnail>
+                            <Left>
+                                <Thumbnail square size={55} source={{ uri: item.image }} />
+                            </Left>
+                            <Body>
+                                <Text>{item.title}</Text>
+                                <Text numberOfLines={1} note>
+                                    {/* {data.note} */}
+                                </Text>
+                            </Body>
+                            <Right>
+                                <Button transparent>
+                                    <Text>View</Text>
+                                </Button>
+                            </Right>
+                        </ListItem>
+                    ))}
 
 
-            <Card title="Collections" containerStyle={{ width: "100%", margin: 0 }}>
+                <H1 style={styles.mb10}>Collections</H1>
 
-                                {
-                        props.collections.map(coll => {
-                            return (
-                                <View key={coll.id} style={styles.user}>
-                                    <Image
-                                        style={styles.image}
-                                        resizeMode="cover"
-                                        source={{ uri: coll.items[0].image }}
-                                    />
-                                    <Text style={styles.name}>{coll.title}</Text>
-                                </View>
-                            );
-                        })
-                    }
-            
- {/*  */}
+                    {props.collections.filter(coll=> coll.title.toLowerCase().includes(search)).map((data, i) => (
+                        <ListItem thumbnail>
+                            <Left>
+                                <Thumbnail square size={55} source={{ uri: data.items[0].image }} />
+                            </Left>
+                            <Body>
+                                <Text>{data.title}</Text>
+                                <Text numberOfLines={1} note>
+                                    {/* {data.note} */}
+                                </Text>
+                            </Body>
+                            <Right>
+                                <Button transparent>
+                                    <Text>View</Text>
+                                </Button>
+                            </Right>
+                        </ListItem>
+                    ))}
+                </List>
+            </Content>
 
-                    
-                
-            </Card>
 
 
-        </ScrollView>
+
+        </Container>
+
+
+
+
+
+
+
+
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+        backgroundColor: "#FFF"
     },
-})
+});
+
 
 
 
