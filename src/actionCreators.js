@@ -1,3 +1,5 @@
+import { Alert } from 'react-native'
+
 
 const api = "http://localhost:3000"
 
@@ -21,7 +23,7 @@ export const createNewCollection = (collection_obj) => dispatch => {
     })
         .then(resp => resp.json())
         .then(
-            data  => {
+            data => {
                 dispatch({ type: 'CREATE_COLLECTION', payload: { collection: data } })
             }
         )
@@ -31,23 +33,12 @@ export const createNewCollection = (collection_obj) => dispatch => {
 //     {type: "CREATE_COLLECTION", payload: {collection_obj}})
 
 export const createItem = item_obj => dispatch => {
-    
-    // fetch(`${api}/items`, {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //         "Accept": "application/json"
-    //     },
-    //     body: JSON.stringify({ item: item_obj })
 
-    
     let formdata = new FormData();
-    for ( var key in item_obj ) {
+    for (var key in item_obj) {
         formdata.append(key, item_obj[key]);
     }
     formdata.append("image", { uri: item_obj.image, name: `${item_obj.id}.jpg`, type: 'image/jpeg' })
-
-
 
     fetch(`${api}/items`, {
         method: `POST`,
@@ -56,9 +47,9 @@ export const createItem = item_obj => dispatch => {
         },
         body: formdata
     }).then(
-        resp=>resp.json()
-    )    .then(
-        data  => {
+        resp => resp.json()
+    ).then(
+        data => {
             dispatch({ type: 'CREATE_ITEM', payload: { item: data } })
         }
     )
@@ -67,7 +58,7 @@ export const createItem = item_obj => dispatch => {
 export const uploadImage = (itemId, imageUri) => dispatch => {
     let formdata = new FormData();
     formdata.append("image", { uri: imageUri, name: `${itemId}.jpg`, type: 'image/jpeg' })
-    
+
     fetch(`${api}/items/${itemId}/image`, {
         method: "POST",
         headers: {
@@ -75,12 +66,12 @@ export const uploadImage = (itemId, imageUri) => dispatch => {
         },
         body: formdata
     })
-    .then(resp => resp.json())
-    .then(
-        data  => {
-            dispatch({ type: 'UPDATE_ITEM', payload: { item: data } })
-        }
-    )
+        .then(resp => resp.json())
+        .then(
+            data => {
+                dispatch({ type: 'UPDATE_ITEM', payload: { item: data } })
+            }
+        )
 }
 
 export const updateItem = (itemId, item_obj) => dispatch => {
@@ -92,12 +83,12 @@ export const updateItem = (itemId, item_obj) => dispatch => {
         },
         body: JSON.stringify({ ...item_obj })
     })
-    .then(resp => resp.json())
-    .then(
-        data  => {
-            dispatch({ type: 'UPDATE_ITEM', payload: { item: data } })
-        }
-    )
+        .then(resp => resp.json())
+        .then(
+            data => {
+                dispatch({ type: 'UPDATE_ITEM', payload: { item: data } })
+            }
+        )
 }
 
 export const signUp = (form) => dispatch => {
@@ -109,16 +100,23 @@ export const signUp = (form) => dispatch => {
         },
         body: JSON.stringify(form)
     })
-    // .then(resp => resp.json())
-    // .then(
-    //     data  => {
-    //         dispatch({ type: 'SIGN_UP', payload: { form } })
-    //     }
-    // )
+        .then(resp => resp.json())
+        .then(response => {
+            if (response.errors) {
+                Alert.alert(response.errors[0])
+            }
+            else {
+                data => {
+                    dispatch({ type: 'SIGN_UP', payload: { user: data } })
+                    navigation.push('MainApp')
+                }
+            }
+        }
+        )
 }
 
 export const signIn = (form) => dispatch => {
-    fetch(`${api}/items/${itemId}`, {
+    fetch(`${api}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -126,10 +124,17 @@ export const signIn = (form) => dispatch => {
         },
         body: JSON.stringify(form)
     })
-    // .then(resp => resp.json())
-    // .then(
-    //     data  => {
-    //         dispatch({ type: 'SIGN_IN', payload: { form } })
-    //     }
-    // )
+        .then(resp => resp.json())
+        .then(response => {
+            if (response.errors) {
+                Alert.alert(response.errors)
+            }
+            else {
+                // data => {
+                //     dispatch({ type: 'SIGN_IN', payload: { user: data } })
+                //     navigation.push('MainApp')
+                // }
+            }
+        }
+        )
 }

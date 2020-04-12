@@ -1,10 +1,12 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import {connect} from 'react-redux'
 
-export default function Settings() {
+
+function Settings() {
     return (
         <View style={styles.container}>
-            <Text>Settings</Text>
+            {currentUser && <Text>currentUser.username</Text>}
         </View>
     )
 }
@@ -16,4 +18,19 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
 })
+
+
+const mdp = dispatch => {
+    return {
+    
+    }
+}
+
+const msp = state => {
+    return {
+        currentUser: state.currentUser
+    }
+}
+
+export default connect(msp, mdp) (Settings)
 

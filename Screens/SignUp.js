@@ -50,6 +50,9 @@ function SignUp(props) {
         if (form.username == ""){
            return Alert.alert("Username cannot be blank")
         }
+        if (form.password == ""){
+            return Alert.alert("Password cannot be blank")
+         }
         else if(form.password !== form.passwordConfirmation){
             return Alert.alert("Passwords do not match")
         }
@@ -57,7 +60,8 @@ function SignUp(props) {
             return Alert.alert("Must be valid email")
         }
         else{
-            props.signUp({username: form.username, password:form.password})
+            props.signUp({username: form.username, password:form.password, email: form.email})
+                navigation.push('MainApp')
         }
     }
 
@@ -118,9 +122,15 @@ const mdp = dispatch => {
     }
 }
 
+const msp = state => {
+    return {
+        currentUser: state.currentUser
+    }
+}
 
 
 
 
-export default connect(null,mdp)(SignUp)
+
+export default connect(msp, mdp)(SignUp)
 
