@@ -5,6 +5,8 @@ import Welcome from './Screens/Welcome';
 import SignIn from './Screens/SignIn';
 import SignUp from './Screens/SignUp';
 import MainApp from './Screens/MainApp';
+import About from './Screens/About';
+import TechSpec from './Screens/TechSpec';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
@@ -28,6 +30,8 @@ export default function App() {
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="MainApp" component={MainApp} />
+            <Stack.Screen name="About" component={About} />
+            <Stack.Screen name="TechSpec" component={TechSpec} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

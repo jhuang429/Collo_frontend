@@ -3,6 +3,10 @@ import { StyleSheet, View, Image, ScrollView } from 'react-native';
 import { SearchBar, Card } from 'react-native-elements';
 import { connect } from 'react-redux'
 import CollectionCard from '../Components/CollectionCard';
+import { useNavigation } from '@react-navigation/native';
+
+
+
 import {
     Container,
     Header,
@@ -22,6 +26,7 @@ import {
 
 
 function SearchContainer(props) {
+    const navigation = useNavigation()
     const [search, setSearch] = useState("")
 
     const updateSearch = search => {
@@ -37,6 +42,12 @@ function SearchContainer(props) {
         setItems(array)
     }
     )},[])
+
+    function extractFields(collections, collID){
+        const coll = collections.find(coll=>coll.id == collID)
+
+        return{ collection_id: coll.id, "data_title_1": coll.data_title_1, "data_title_2": coll.data_title_2, "data_title_3": coll.data_title_3, "data_title_4": coll.data_title_4, "data_title_5": coll.data_title_5, "data_title_6": coll.data_title_6, "data_title_7": coll.data_title_7, "data_title_8": coll.data_title_8, "data_title_9": coll.data_title_9, "data_title_10": coll.data_title_10 }
+    }
 
 
     return (
@@ -54,8 +65,8 @@ function SearchContainer(props) {
             <Content>
                 <H1 style={styles.mb10}>Items</H1>
                 <List>
-                    {items.filter(coll=> coll.title.toLowerCase().includes(search)).map((item, i) => (
-                        <ListItem thumbnail>
+                    {items && items.filter(coll=> coll.title.toLowerCase().includes(search)).map((item) => (
+                        <ListItem thumbnail key={item.id}>
                             <Left>
                                 <Thumbnail square size={55} source={{ uri: item.image }} />
                             </Left>
@@ -66,7 +77,7 @@ function SearchContainer(props) {
                                 </Text>
                             </Body>
                             <Right>
-                                <Button transparent>
+                                <Button transparent onPress={() => navigation.push('ItemEdit', { fields: extractFields(props.collections,item.collection_id), item: item})}>
                                     <Text>View</Text>
                                 </Button>
                             </Right>
@@ -76,10 +87,10 @@ function SearchContainer(props) {
 
                 <H1 style={styles.mb10}>Collections</H1>
 
-                    {props.collections.filter(coll=> coll.title.toLowerCase().includes(search)).map((data, i) => (
-                        <ListItem thumbnail>
+                    {props.collections && props.collections.filter(coll=> coll.title.toLowerCase().includes(search)).map((data) => (
+                        <ListItem thumbnail key={data.id}>
                             <Left>
-                                <Thumbnail square size={55} source={{ uri: data.items[0].image }} />
+                                <Thumbnail square size={55} source={ require('../assets/no-img.png') } />
                             </Left>
                             <Body>
                                 <Text>{data.title}</Text>
@@ -88,7 +99,7 @@ function SearchContainer(props) {
                                 </Text>
                             </Body>
                             <Right>
-                                <Button transparent>
+                                <Button transparent onPress={() => navigation.push('ItemContainer', { fields: extractFields(props.collections,data.id), collectionId: data.id, collectionTitle: data.title })}>
                                     <Text>View</Text>
                                 </Button>
                             </Right>

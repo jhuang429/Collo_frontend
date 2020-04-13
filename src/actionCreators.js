@@ -3,8 +3,12 @@ import { Alert, AsyncStorage } from 'react-native'
 
 const api = "http://localhost:3000"
 
-export const fetchCollections = () => dispatch => {
-    fetch(`${api}/collections`)
+export const fetchCollections = (token) => dispatch => {
+    fetch(`${api}/collections`, {
+        headers: {
+            "Authorization": token
+        }
+    })
         .then(resp => resp.json())
         .then(data => {
             dispatch({ type: 'FETCH_COLLECTIONS', payload: { collections: data } })
@@ -134,7 +138,8 @@ export const signIn = (form) => dispatch => {
                 dispatch({ type: 'SIGN_IN', payload: { user: data.user, token: data.token } })
             }
         }
-        )
+        )                    
+
 }
 
 export const logOut = () => {
@@ -143,18 +148,16 @@ export const logOut = () => {
 }
 
 
-export const autoSignIn = (form) => dispatch => {
-    if (AsyncStorage.getItem('token')) {
-    
+export const autoSignIn = (token) => dispatch => {
     fetch(`${api}/autologin`, {
         headers: {
-            "Authorization": AsyncStorage.getItem('token')
+            "Authorization": token
         }
     })
         .then(resp => resp.json())
         .then(data => {
-            dispatch({ type: 'SIGN_IN', payload: { user: data.user } })
+            dispatch({ type: 'SIGN_IN', payload: { user: data.user, token: token } })
         }
         )
-    }
+
 }

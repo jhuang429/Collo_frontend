@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
 import { StyleSheet, Alert } from 'react-native'
 import {connect} from 'react-redux'
-import { signIn } from '../src/actionCreators'
+import { signIn, fetchCollections } from '../src/actionCreators'
 
 
 import {
@@ -50,6 +50,7 @@ function SignIn(props) {
         }
         else {
             props.signIn({ username: form.username, password: form.password })
+            props.fetchCollections(props.token)
         }
 
 
@@ -91,7 +92,7 @@ function SignIn(props) {
                     <Text>Sign In</Text>
                 </Button>
 
-                <Text style={{ marginTop: 50, marginLeft: 20 }} onPress={() => navigation.push("SignUp")}>No Account? Sign up</Text>
+                <Text style={{ marginTop: 50, marginLeft: 20 }} onPress={() => navigation.push("SignUp")}>Don't have an account? Sign up</Text>
                 <Text style={{ marginTop: 20, marginLeft: 20 }} onPress={() => Alert.alert("Please email customer service")}>Forgot password/Username?</Text>
             </Content>
         </Container>
@@ -100,13 +101,15 @@ function SignIn(props) {
 
 const mdp = dispatch => {
     return {
-        signIn: (form)=>dispatch(signIn(form))
+        signIn: (form)=>dispatch(signIn(form)),
+        fetchCollections: (token)=>dispatch(fetchCollections(token))
     }
 }
 
 const msp = state => {
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        token: state.token
     }
 }
 

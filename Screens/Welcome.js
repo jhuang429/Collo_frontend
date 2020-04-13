@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, AsyncStorage, Button, Image } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, { useEffect } from 'react'
+import { StyleSheet, Text, View, AsyncStorage, Button, Image, TouchableOpacity} from 'react-native';
 import colors from '../Constants/colors'
 import { connect } from 'react-redux'
+import { autoSignIn, signIn, fetchCollections, logOut } from '../src/actionCreators'
 
 
 function Welcome(props) {
@@ -10,7 +10,7 @@ function Welcome(props) {
 
 
     useEffect(() => {
-        const bootstrapAsync = async () => {
+        const checkTokenAsync = async () => {
             let token;
 
             try {
@@ -31,17 +31,12 @@ function Welcome(props) {
                         if (response.errors) {
                             Alert.alert(response.errors)
                         } else {
-                            // this.setState({
-                            //   currentUser: response
-                            // })
+                            props.autoSignIn(token)
                         }
                     })
             }
-
         };
-
-        bootstrapAsync();
-
+        checkTokenAsync();
     }, []
     )
 
@@ -61,8 +56,10 @@ function Welcome(props) {
             <View styles={styles.buttons}>
                 {props.token ?
                     <View>
-                        <Text> Welcome back, {props.currentUser.username}</Text>
-                        <Button title="Continue" onPress={() => props.navigation.push('MainApp')} />
+                        {props.currentUser && <Text>Welcome back</Text>}
+                        <Button title={`Continue as ${props.currentUser.username}`} onPress={() => props.navigation.push('MainApp')} />
+                        {/* <Text style={{ marginTop: 60, color: "blue" }} >Sign in with a different account?</Text> */}
+                        <Button title="Sign in with a different account?" style={{ marginTop: 60, color: "blue" }} onPress={() => props.logOut()} />
                     </View>
                     :
                     <Button title="Sign In / Sign Up" onPress={() => props.navigation.push('SignIn')} />
@@ -70,6 +67,12 @@ function Welcome(props) {
             </View>
 
             <View style={styles.bottom}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => props.navigation.push('About')}
+                >
+                    <Text>About</Text>
+                </TouchableOpacity>
             </View>
 
         </View>
@@ -107,7 +110,10 @@ const styles = StyleSheet.create({
 
 const mdp = dispatch => {
     return {
-        signIn: (form) => dispatch(signIn(form))
+        signIn: (form) => dispatch(signIn(form)),
+        logOut: () => dispatch(logOut()),
+        autoSignIn: (token) => dispatch(autoSignIn(token)),
+        fetchCollections: (token) => dispatch(fetchCollections(token))
     }
 }
 

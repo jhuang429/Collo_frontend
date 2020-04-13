@@ -28,7 +28,7 @@ export const reducer = (prevState = initialState, action) => {
         case 'SIGN_IN':
             return { ...prevState, currentUser: action.payload.user, token: action.payload.token }
         case 'LOG_OUT':
-            return { ...prevState, currentUser: null, token: null }
+            return { collections: [], currentUser: null, token: null }
         default:
             return prevState
     }

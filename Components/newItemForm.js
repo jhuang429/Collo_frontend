@@ -28,17 +28,17 @@ function NewItemForm(props) {
         data_field_10: null
     })
 
-    const handleTitle = (text) => { setState({ title: text }) }
-    const handleField1 = (text) => { setState({ data_field_1: text }) }
-    const handleField2 = (text) => { setState({ data_field_2: text }) }
-    const handleField3 = (text) => { setState({ data_field_3: text }) }
-    const handleField4 = (text) => { setState({ data_field_4: text }) }
-    const handleField5 = (text) => { setState({ data_field_5: text }) }
-    const handleField6 = (text) => { setState({ data_field_6: text }) }
-    const handleField7 = (text) => { setState({ data_field_7: text }) }
-    const handleField8 = (text) => { setState({ data_field_8: text }) }
-    const handleField9 = (text) => { setState({ data_field_9: text }) }
-    const handleField10 = (text) => { setState({ data_field_10: text }) }
+    const handleTitle = (text) => { setState(prevState=>({...prevState, title: text })) }
+    const handleField1 = (text) => { setState(prevState=>({ ...prevState, data_field_1: text })) }
+    const handleField2 = (text) => { setState(prevState=>({ ...prevState, data_field_2: text })) }
+    const handleField3 = (text) => { setState(prevState=>({ ...prevState, data_field_3: text })) }
+    const handleField4 = (text) => { setState(prevState=>({ ...prevState, data_field_4: text })) }
+    const handleField5 = (text) => { setState(prevState=>({ ...prevState, data_field_5: text })) }
+    const handleField6 = (text) => { setState(prevState=>({ ...prevState, data_field_6: text })) }
+    const handleField7 = (text) => { setState(prevState=>({ ...prevState, data_field_7: text })) }
+    const handleField8 = (text) => { setState(prevState=>({ ...prevState, data_field_8: text })) }
+    const handleField9 = (text) => { setState(prevState=>({ ...prevState, data_field_9: text })) }
+    const handleField10 = (text) => { setState(prevState=>({ ...prevState, data_field_10: text })) }
 
     useEffect(
         () => setState({ collection_id: props.route.params.fields.collection_id

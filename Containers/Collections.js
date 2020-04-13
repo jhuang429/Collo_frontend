@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 import CollectionCard from '../Components/CollectionCard';
 import { connect } from 'react-redux'
 import { fetchCollections } from '../src/actionCreators'
@@ -16,8 +16,8 @@ function Collections(props) {
     };
 
     useEffect(() => {
-        props.fetchCollections()
-    }, []
+        props.token ? props.fetchCollections(props.token) : null
+    }, [props.token]
     )
     
     return (
@@ -57,13 +57,14 @@ const styles = StyleSheet.create({
 
 const msp = state => {
     return {
-        collections: state.collections
+        collections: state.collections,
+        token: state.token
     }
 }
 
 const mdp = (dispatch) => {
     return {
-        fetchCollections: () => dispatch(fetchCollections())
+        fetchCollections: (token) => dispatch(fetchCollections(token))
     }
 }
 

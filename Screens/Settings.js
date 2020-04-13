@@ -61,7 +61,8 @@ const mdp = dispatch => {
 
 const msp = state => {
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        token: state.token
     }
 }
 
