@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { StyleSheet, Alert } from 'react-native'
 import {connect} from 'react-redux'
 import { signIn } from '../src/actionCreators'
@@ -51,7 +51,14 @@ function SignIn(props) {
         else {
             props.signIn({ username: form.username, password: form.password })
         }
+
+
     }
+
+    useEffect(() => {
+        if(props.currentUser){
+        navigation.push("MainApp")}
+    }, [props.currentUser])
 
 
 

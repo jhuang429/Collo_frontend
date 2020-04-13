@@ -1,4 +1,4 @@
-import { Alert } from 'react-native'
+import { Alert, AsyncStorage } from 'react-native'
 
 
 const api = "http://localhost:3000"
@@ -107,8 +107,8 @@ export const signUp = (form) => dispatch => {
             }
             else {
                 data => {
-                    dispatch({ type: 'SIGN_UP', payload: { user: data } })
-                    navigation.push('MainApp')
+                    dispatch({ type: 'SIGN_IN', payload: { user: data.user, token: data.token } })
+                    // navigation.push('MainApp')
                 }
             }
         }
@@ -125,16 +125,36 @@ export const signIn = (form) => dispatch => {
         body: JSON.stringify(form)
     })
         .then(resp => resp.json())
-        .then(response => {
-            if (response.errors) {
-                Alert.alert(response.errors)
+        .then(data => {
+            if (data.errors) {
+                Alert.alert(data.errors)
             }
             else {
-                // data => {
-                //     dispatch({ type: 'SIGN_IN', payload: { user: data } })
-                //     navigation.push('MainApp')
-                // }
+                AsyncStorage.setItem('token', data.token)
+                dispatch({ type: 'SIGN_IN', payload: { user: data.user, token: data.token } })
             }
         }
         )
+}
+
+export const logOut = () => {
+    AsyncStorage.clear()
+    return ({ type: 'LOG_OUT' })
+}
+
+
+export const autoSignIn = (form) => dispatch => {
+    if (AsyncStorage.getItem('token')) {
+    
+    fetch(`${api}/autologin`, {
+        headers: {
+            "Authorization": AsyncStorage.getItem('token')
+        }
+    })
+        .then(resp => resp.json())
+        .then(data => {
+            dispatch({ type: 'SIGN_IN', payload: { user: data.user } })
+        }
+        )
+    }
 }

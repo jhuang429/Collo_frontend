@@ -1,12 +1,45 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, TextInput, TouchableOpacity, ScrollView, Text } from 'react-native';
 import {connect} from 'react-redux'
+import { logOut } from '../src/actionCreators'
+
+import { useNavigation } from '@react-navigation/native';
 
 
-function Settings() {
+
+import {
+    Container,
+    Header,
+    Title,
+    Content,
+    Button,
+    Item,
+    Label,
+    Input,
+    Body,
+    Left,
+    Right,
+    Icon,
+    Form,
+    
+} from "native-base";
+
+
+function Settings(props) {
+    
+    const navigation = useNavigation()
+
+    const handleSubmit = () => {
+        props.logOut()
+        navigation.push("Welcome")
+        }
+
     return (
         <View style={styles.container}>
-            {currentUser && <Text>currentUser.username</Text>}
+            {props.currentUser && <Text>{props.currentUser.username}</Text>}
+            <Button block style={{ margin: 15, marginTop: 50, color: "white x " }} onPress={handleSubmit}>
+                    <Text>Log Out</Text>
+                </Button>
         </View>
     )
 }
@@ -22,7 +55,7 @@ const styles = StyleSheet.create({
 
 const mdp = dispatch => {
     return {
-    
+        logOut: ()=>dispatch( logOut() )
     }
 }
 

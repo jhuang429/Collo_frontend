@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { StyleSheet, Alert } from 'react-native'
 import {connect} from 'react-redux'
 import { signUp } from '../src/actionCreators'
@@ -32,6 +32,11 @@ function SignUp(props) {
         email: "",
 
     })
+
+    useEffect(() => {
+        if(props.currentUser){
+        navigation.push("MainApp")}
+    }, [props.currentUser])
 
     const handleUserName = (text) =>{
         setForm(prevState=> ({...prevState, username: text}))

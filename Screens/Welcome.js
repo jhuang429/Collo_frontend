@@ -1,14 +1,54 @@
-import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Button, Image } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, AsyncStorage, Button, Image } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import colors from '../Constants/colors'
+import { connect } from 'react-redux'
 
 
-function Welcome({ navigation }) {
+function Welcome(props) {
+
+
+
+    useEffect(() => {
+        const bootstrapAsync = async () => {
+            let token;
+
+            try {
+                token = await AsyncStorage.getItem('token');
+            } catch (e) {
+                // Restoring token failed
+            }
+
+            if (token) {
+                //get user info if token is present 
+                fetch("http://localhost:3000/autologin", {
+                    headers: {
+                        "Authorization": token
+                    }
+                })
+                    .then(res => res.json())
+                    .then(response => {
+                        if (response.errors) {
+                            Alert.alert(response.errors)
+                        } else {
+                            // this.setState({
+                            //   currentUser: response
+                            // })
+                        }
+                    })
+            }
+
+        };
+
+        bootstrapAsync();
+
+    }, []
+    )
+
 
     return (
         <View style={styles.container}>
-            
+
             <View style={styles.top}>
             </View>
 
@@ -19,8 +59,14 @@ function Welcome({ navigation }) {
             </View>
 
             <View styles={styles.buttons}>
-                <Button title="Sign In / Sign Up" onPress={() => navigation.push('SignIn')} />
-                <Button title="Continue" onPress={() => navigation.push('MainApp')} />
+                {props.token ?
+                    <View>
+                        <Text> Welcome back, {props.currentUser.username}</Text>
+                        <Button title="Continue" onPress={() => props.navigation.push('MainApp')} />
+                    </View>
+                    :
+                    <Button title="Sign In / Sign Up" onPress={() => props.navigation.push('SignIn')} />
+                }
             </View>
 
             <View style={styles.bottom}>
@@ -30,7 +76,6 @@ function Welcome({ navigation }) {
     )
 }
 
-export default Welcome
 
 const styles = StyleSheet.create({
     container: {
@@ -60,3 +105,18 @@ const styles = StyleSheet.create({
     }
 })
 
+const mdp = dispatch => {
+    return {
+        signIn: (form) => dispatch(signIn(form))
+    }
+}
+
+const msp = state => {
+    return {
+        currentUser: state.currentUser,
+        token: state.token
+    }
+}
+
+
+export default connect(msp, mdp)(Welcome)
