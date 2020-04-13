@@ -52,31 +52,14 @@ const handleSubmit = () => {
 
 const handleAddPhotos = () => {
     ImagePicker.getCameraRollPermissionsAsync()
-    ImagePicker.launchImageLibraryAsync().then(img => setState({ image: img.uri }))
+    ImagePicker.launchImageLibraryAsync().then(img => setState(prevState=>({...prevState, image: img.uri })))
 
 }
-
-// handleUploadPhoto = (item) => {
-//     let photo = { uri: state.image }
-//     let formdata = new FormData();
-//     formdata.append("image", { uri: photo.uri, name: `${item.id}.jpg`, type: 'image/jpeg' })
-
-//     fetch(`http://localhost:3000/items/${item.id}/image`, {
-//         method: "POST",
-//         headers: {
-//             'Content-Type': 'multipart/form-data',
-//         },
-//         body: formdata
-//     })
-// }
-
-
-
     const { fields } = props.route.params
 
     return (
         <View>
-            
+            <Text>collection ID: {props.route.params.fields.collection_id}</Text>
             {state.image ?
                 <Image
 

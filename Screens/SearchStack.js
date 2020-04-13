@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ItemContainer from '../Containers/ItemContainer';
 import SearchContainer from '../Containers/SearchContainer';
 import EditItemCard from '../Components/EditItemForm'
+import NewItemForm from '../Components/NewItemForm';
 
 
 
@@ -16,6 +17,7 @@ function SearchStack() {
             <Stack.Screen name="Search" component={SearchContainer} />
             <Stack.Screen name="ItemContainer" component={ItemContainer} />
             <Stack.Screen name="ItemEdit" component={EditItemCard} />
+            <Stack.Screen name="NewItemForm" component={NewItemForm} />
             
         </Stack.Navigator>
     );
