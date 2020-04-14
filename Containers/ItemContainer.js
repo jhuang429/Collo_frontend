@@ -33,7 +33,7 @@ function ItemContainer(props) {
                     <ItemCard key={item.id} item={item} collection_id={curCollection.id} />
             ))}
         </View>
-            <Button title="Add" onPress={() => { navigation.push('NewItemForm', { collection_id: curCollection.id }) }} />
+            <Button title="Add" onPress={() => { navigation.push('NewItemForm', { collection: curCollection }) }} />
      </ScrollView>
     )
 }

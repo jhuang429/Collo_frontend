@@ -6,10 +6,11 @@ import * as ImagePicker from 'expo-image-picker';
 import { connect } from 'react-redux'
 import { uploadImage, updateItem } from '../src/actionCreators'
 import { useNavigation } from '@react-navigation/native';
+import colors from '../Constants/colors'
 
 function EditItemForm(props) {
-    
-    
+
+
     const [state, setState] = useState({
         title: '',
         data_field_1: "",
@@ -45,7 +46,7 @@ function EditItemForm(props) {
     const { item, collection } = props.route.params
 
     const handleUpdate = () => {
-        props.updateItem(item.id, {...state})
+        props.updateItem(item.id, { ...state })
         navigation.goBack()
     }
 
@@ -57,7 +58,7 @@ function EditItemForm(props) {
 
     const handleAddPhotos = () => {
         ImagePicker.getCameraRollPermissionsAsync()
-        ImagePicker.launchImageLibraryAsync().then(img => setImage(img.uri ))
+        ImagePicker.launchImageLibraryAsync().then(img => setImage(img.uri))
     }
 
     const handleUploadPhoto = () => {
@@ -78,11 +79,12 @@ function EditItemForm(props) {
                 data_field_8: item.data_field_8,
                 data_field_9: item.data_field_9,
                 data_field_10: item.data_field_10,
-            })}, []
+            })
+        }, []
     )
 
     useEffect(
-        ()=> setImage(item.image), []
+        () => setImage(item.image), []
     )
 
 
@@ -101,17 +103,17 @@ function EditItemForm(props) {
         collection.data_title_10
     ]
     const tableData = [
-        [<TextInput value={state.title} onChangeText={handleTitle} />],
-        [<TextInput value={state.data_field_1} onChangeText={handleField1} />],
-        [<TextInput value={state.data_field_2} onChangeText={handleField2} />],
-        [<TextInput value={state.data_field_3} onChangeText={handleField3} />],
-        [<TextInput value={state.data_field_4} onChangeText={handleField4} />],
-        [<TextInput value={state.data_field_5} onChangeText={handleField5} />],
-        [<TextInput value={state.data_field_6} onChangeText={handleField6} />],
-        [<TextInput value={state.data_field_7} onChangeText={handleField7} />],
-        [<TextInput value={state.data_field_8} onChangeText={handleField8} />],
-        [<TextInput value={state.data_field_9} onChangeText={handleField9} />],
-        [<TextInput value={state.data_field_10} onChangeText={handleField10} />],
+        ["Name", <TextInput value={state.title} onChangeText={handleTitle} />],
+        [collection.data_title_1, <TextInput value={state.data_field_1} onChangeText={handleField1} />],
+        [collection.data_title_2, <TextInput value={state.data_field_2} onChangeText={handleField2} />],
+        [collection.data_title_3, <TextInput value={state.data_field_3} onChangeText={handleField3} />],
+        [collection.data_title_4, <TextInput value={state.data_field_4} onChangeText={handleField4} />],
+        [collection.data_title_5, <TextInput value={state.data_field_5} onChangeText={handleField5} />],
+        [collection.data_title_6, <TextInput value={state.data_field_6} onChangeText={handleField6} />],
+        [collection.data_title_7, <TextInput value={state.data_field_7} onChangeText={handleField7} />],
+        [collection.data_title_8, <TextInput value={state.data_field_8} onChangeText={handleField8} />],
+        [collection.data_title_9, <TextInput value={state.data_field_9} onChangeText={handleField9} />],
+        [collection.data_title_10, <TextInput value={state.data_field_10} onChangeText={handleField10} />],
     ]
 
     return (
@@ -141,12 +143,9 @@ function EditItemForm(props) {
             </TouchableOpacity>
 
             <View style={styles.container}>
-                <Table borderStyle={{ borderWidth: 1 }}>
-                    <Row data={tableHead} flexArr={[1, 1]} style={styles.head} textStyle={styles.text} />
-                    <TableWrapper style={styles.wrapper}>
-                        <Col data={tableTitle} style={styles.title} heightArr={[28, 28]} textStyle={styles.text} />
-                        <Rows data={tableData} flexArr={[1, 1]} style={styles.row} textStyle={styles.text} />
-                    </TableWrapper>
+                <Table borderStyle={{ borderWidth: 1, borderColor: "black" }}>
+                    <Row data={tableHead} flexArr={[1, 2]} style={styles.head} textStyle={{ margin: 6, color: "white" }} />
+                    <Rows data={tableData} flexArr={[1, 2]} borderStyle={{ borderColor: "black" }} textStyle={styles.text} />
                 </Table>
             </View>
 
@@ -178,16 +177,14 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 15,
         height: 40,
+        color: "white"
     },
     submitButtonText: {
-        color: 'white'
+        color: "white"
     },
-    container: { padding: 16, paddingTop: 30 },
-    head: { height: 40, backgroundColor: '#f1f8ff' },
-    wrapper: { flexDirection: 'row' },
-    title: { flex: 1, backgroundColor: '#f6f8fa' },
-    row: { height: 28 },
-    text: { textAlign: 'center' }
+    container: { flex: 1, padding: 16, paddingTop: 10, backgroundColor: '#fff' },
+    head: { height: 40, backgroundColor: "#7a42f4" },
+    text: { margin: 6 },
 })
 
 const mdp = (dispatch) => {
