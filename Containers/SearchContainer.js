@@ -73,7 +73,7 @@ function SearchContainer(props) {
                                 </Text>
                             </Body>
                             <Right>
-                                <Button transparent onPress={() => navigation.push('ItemContainer', { collection_id: data.id, collectionTitle: data.title })}>
+                                <Button transparent onPress={() => navigation.push('ItemContainer', { collection_id: data.id, title: data.title })}>
                                     <Text>View</Text>
                                 </Button>
                             </Right>

@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 function ItemContainer(props) {
-//need props of collection_id & collectionTitle
+//need props of collection_id & title
 
     const navigation = useNavigation()
 
@@ -36,10 +36,6 @@ function ItemContainer(props) {
      </ScrollView>
     )
 }
-
-
-
-
 
 const styles = StyleSheet.create({
     screen: {

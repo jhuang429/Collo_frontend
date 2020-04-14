@@ -74,6 +74,11 @@ function EditItemForm(props) {
         ImagePicker.launchImageLibraryAsync().then(img => setImage(img.uri))
         setUnSavedImage(true)
     }
+    const handleCamera = () => {
+        ImagePicker.getCameraRollPermissionsAsync()
+        ImagePicker.launchCameraAsync().then(img => setImage(img.uri))
+        setUnSavedImage(true)
+    }
     const handleUploadPhoto = () => {
         props.uploadImage(item.id, image)
         setUnSavedImage(false)
@@ -109,9 +114,15 @@ function EditItemForm(props) {
                 />}
 
             <TouchableOpacity
-                style={styles.submitButton}
+                style={{...styles.submitButton, marginBottom:0}}
                 onPress={handleAddPhotos}>
                 <Text style={styles.submitButtonText}> Add Image </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={{...styles.submitButton, marginTop:5}}
+                onPress={handleCamera}>
+                <Text style={styles.submitButtonText}> User Camera </Text>
             </TouchableOpacity>
 
 
