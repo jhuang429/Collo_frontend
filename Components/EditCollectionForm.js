@@ -2,7 +2,7 @@ import React, { Componen, useEffect, useState } from 'react'
 import { StyleSheet, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Colors from '../Constants/colors'
 import { connect } from 'react-redux'
-import { createNewCollection } from '../src/actionCreators'
+import { editCollection } from '../src/actionCreators'
 import { Item, Label, Input, Form, Text } from "native-base";
 
 
@@ -10,7 +10,7 @@ function EditCollectionForm(props) {
 
     const [state, setState] = useState({
         title: 'hello',
-        user_id: 1,
+        id: null,
         data_title_1: null,
         data_title_2: null,
         data_title_3: null,
@@ -23,27 +23,9 @@ function EditCollectionForm(props) {
         data_title_10: null
     })
 
-    // const clearState = () => {
-    //     setState({
-    //         title: hello,
-    //         user_id: 1,
-    //         data_title_1: null,
-    //         data_title_2: null,
-    //         data_title_3: null,
-    //         data_title_4: null,
-    //         data_title_5: null,
-    //         data_title_6: null,
-    //         data_title_7: null,
-    //         data_title_8: null,
-    //         data_title_9: null,
-    //         data_title_10: null
-    //     })
-    // }
-
     useEffect(() => {
-        // props.currentUser && setState(prevState => ({ ...prevState, user_id: props.currentUser.id }))
         setState(prevState => ({ ...prevState, ...props.route.params.collection }))
-    }, [props.currentUser])
+    }, [props.route.params.collection])
 
     const handleTitle = (text) => { setState(prevState => ({ ...prevState, title: text })) }
     const handleField1 = (text) => { setState(prevState => ({ ...prevState, data_title_1: text })) }
@@ -58,34 +40,13 @@ function EditCollectionForm(props) {
     const handleField10 = (text) => { setState(prevState => ({ ...prevState, data_title_10: text })) }
 
     const handleSubmit = () => {
-        props.createNewCollection(state)
-        // clearState()
+        props.editCollection(state)
         props.navigation.navigate('My Collection')
-
     }
-
-    // const data = [
-
-    //     { value: 'Price' },
-    //     { value: 'Date' },
-    //     { value: 'Quantity' },
-    //     { value: 'Rating' },
-    //     { value: 'Text' },
-    //     { value: 'Notes' },
-    // ];
 
     return (
         <View style={styles.screen}>
             <ScrollView >
-
-                {/* <TextInput style={styles.input}
-                    underlineColorAndroid="transparent"
-                    placeholder="Collection Title"
-                    placeholderTextColor={Colors.primary}
-                    autoCapitalize="none"
-                    onChangeText={handleTitle}
-                    value={state.title} /> */}
-
                 <Form>
                     <Item stackedLabel>
                         <Label>Collection Title</Label>
@@ -132,7 +93,6 @@ function EditCollectionForm(props) {
                         <Input value={state.data_title_10} onChangeText={handleField10}/>
                     </Item>
                 </Form>
-
             </ScrollView>
 
             <TouchableOpacity
@@ -140,6 +100,7 @@ function EditCollectionForm(props) {
                 onPress={handleSubmit}>
                 <Text style={styles.submitButtonText}> Update Collection </Text>
             </TouchableOpacity>
+
         </View>
     )
 
@@ -167,7 +128,7 @@ const styles = StyleSheet.create({
 const mdp = dispatch => {
 
     return {
-        createNewCollection: (collection_obj) => dispatch(createNewCollection(collection_obj)),
+        editCollection: (collection_obj) => dispatch(editCollection(collection_obj)),
     }
 }
 

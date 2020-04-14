@@ -33,8 +33,22 @@ export const createNewCollection = (collection_obj) => dispatch => {
         )
 }
 
-// export const createNewCollection = collection_obj => (
-//     {type: "CREATE_COLLECTION", payload: {collection_obj}})
+export const editCollection = (collection_obj) => dispatch => {
+    fetch(`${api}/collections/${collection_obj.id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({ collection: collection_obj })
+    })
+        .then(resp => resp.json())
+        .then(
+            data => {
+                dispatch({ type: 'EDIT_COLLECTION', payload: { collection: data } })
+            }
+        )
+}
 
 export const createItem = item_obj => dispatch => {
 
