@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 import { fetchCollections } from '../src/actionCreators'
 import { SearchBar } from 'react-native-elements';
 
-
-
 function Collections(props) {
 
     const [search, setSearch] = useState("")

@@ -1,26 +1,8 @@
 import React, { Component, useState, useEffect } from "react";
 import { StyleSheet, Alert } from 'react-native'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { signIn, fetchCollections } from '../src/actionCreators'
-
-
-import {
-    Container,
-    Header,
-    Title,
-    Content,
-    Button,
-    Item,
-    Label,
-    Input,
-    Body,
-    Left,
-    Right,
-    Icon,
-    Form,
-    Text
-} from "native-base";
-import colors from '../Constants/colors'
+import { Container, Header, Title, Content, Button, Item, Label, Input, Body, Left, Right, Icon, Form, Text } from "native-base";
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -31,7 +13,6 @@ function SignIn(props) {
         username: "",
         password: "",
     })
-
 
     const handleUserName = (text) => {
         setForm(prevState => ({ ...prevState, username: text }))
@@ -52,13 +33,12 @@ function SignIn(props) {
             props.signIn({ username: form.username, password: form.password })
             props.fetchCollections(props.token)
         }
-
-
     }
 
     useEffect(() => {
-        if(props.currentUser){
-        navigation.push("MainApp")}
+        if (props.currentUser) {
+            navigation.push("MainApp")
+        }
     }, [props.currentUser])
 
 
@@ -98,28 +78,23 @@ function SignIn(props) {
         </Container>
     );
 }
-
-const mdp = dispatch => {
-    return {
-        signIn: (form)=>dispatch(signIn(form)),
-        fetchCollections: (token)=>dispatch(fetchCollections(token))
-    }
-}
-
-const msp = state => {
-    return {
-        currentUser: state.currentUser,
-        token: state.token
-    }
-}
-
-
-
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#FFF"
     }
 });
 
-export default connect(msp, mdp) (SignIn)
+const mdp = dispatch => {
+    return {
+        signIn: (form) => dispatch(signIn(form)),
+        fetchCollections: (token) => dispatch(fetchCollections(token))
+    }
+}
+const msp = state => {
+    return {
+        currentUser: state.currentUser,
+        token: state.token
+    }
+}
+export default connect(msp, mdp)(SignIn)
 

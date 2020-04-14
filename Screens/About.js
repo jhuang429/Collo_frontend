@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View, AsyncStorage, Button, Image, TouchableOpacity } from 'react-native';
-import colors from '../Constants/colors'
 
 
 function About(props) {
@@ -10,8 +9,6 @@ function About(props) {
             <View style={styles.top}>
             </View>
             <Image style={{}} source={require('../assets/Logo.png')} />
-
-
 
             <View style={styles.motto}>
                 <Text> Created by: Jerry Huang </Text>

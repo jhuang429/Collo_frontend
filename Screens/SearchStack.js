@@ -7,9 +7,6 @@ import EditItemCard from '../Components/EditItemForm'
 import NewItemForm from '../Components/NewItemForm';
 import EditCollectionForm from '../Components/EditCollectionForm'
 
-
-
-
 const Stack = createStackNavigator();
 
 function SearchStack() {

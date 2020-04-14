@@ -7,9 +7,9 @@ import { useNavigation } from '@react-navigation/native';
 
 
 function ItemContainer(props) {
+//need props of collection_id & collectionTitle
 
     const navigation = useNavigation()
-
 
     navigation.setOptions({ title: props.route.params.title, headerRight: () => (
         <Button
@@ -24,7 +24,6 @@ function ItemContainer(props) {
       useEffect(() => {
           setCurCollection(props.collections.find(coll=>coll.id == props.route.params.collection_id))
       }, [props.collections])
-
 
     return (
         <ScrollView>
@@ -44,14 +43,16 @@ function ItemContainer(props) {
 
 const styles = StyleSheet.create({
     screen: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
+        flex: 1,
+        margin: 15,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-around"
     },
     CollectionCard: {
-    alignContent:"center"
+        alignContent: "center"
     }
-    })
+})
 
 
 const msp = (state) => {

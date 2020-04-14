@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
-import Colors from '../Constants/colors'
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import * as ImagePicker from 'expo-image-picker';
 import { connect } from 'react-redux'
@@ -9,8 +8,13 @@ import { useNavigation } from '@react-navigation/native';
 import colors from '../Constants/colors'
 
 function EditItemForm(props) {
+    const { item, collection } = props.route.params
+    const navigation = useNavigation()
+    navigation.setOptions({ title: item.title })
 
-
+    //states
+    const [image, setImage] = useState(null)
+    const [unSavedImage, setUnSavedImage] = useState(false)
     const [state, setState] = useState({
         title: '',
         data_field_1: "",
@@ -24,46 +28,6 @@ function EditItemForm(props) {
         data_field_9: "",
         data_field_10: "",
     })
-
-    const [image, setImage] = useState(null)
-    const navigation = useNavigation()
-    navigation.setOptions({ title: state.title })
-
-    const handleTitle = (text) => { setState({ ...state, title: text }) }
-    const handleField1 = (text) => { setState({ ...state, data_field_1: text }) }
-    const handleField2 = (text) => { setState({ ...state, data_field_2: text }) }
-    const handleField3 = (text) => { setState({ ...state, data_field_3: text }) }
-    const handleField4 = (text) => { setState({ ...state, data_field_4: text }) }
-    const handleField5 = (text) => { setState({ ...state, data_field_5: text }) }
-    const handleField6 = (text) => { setState({ ...state, data_field_6: text }) }
-    const handleField7 = (text) => { setState({ ...state, data_field_7: text }) }
-    const handleField8 = (text) => { setState({ ...state, data_field_8: text }) }
-    const handleField9 = (text) => { setState({ ...state, data_field_9: text }) }
-    const handleField10 = (text) => { setState({ ...state, data_field_10: text }) }
-
-
-
-    const { item, collection } = props.route.params
-
-    const handleUpdate = () => {
-        props.updateItem(item.id, { ...state })
-        navigation.goBack()
-    }
-
-    const handleDelete = () => {
-        fetch(`http://localhost:3000/items/${item.id}`, {
-            method: "DELETE",
-        })
-    }
-
-    const handleAddPhotos = () => {
-        ImagePicker.getCameraRollPermissionsAsync()
-        ImagePicker.launchImageLibraryAsync().then(img => setImage(img.uri))
-    }
-
-    const handleUploadPhoto = () => {
-        props.uploadImage(item.id, image)
-    }
 
     useEffect(
         () => {
@@ -80,28 +44,42 @@ function EditItemForm(props) {
                 data_field_9: item.data_field_9,
                 data_field_10: item.data_field_10,
             })
+            setImage(item.image)
         }, []
     )
 
-    useEffect(
-        () => setImage(item.image), []
-    )
-
+    //form handlers
+    const handleTitle = (text) => { setState({ ...state, title: text }) }
+    const handleField1 = (text) => { setState({ ...state, data_field_1: text }) }
+    const handleField2 = (text) => { setState({ ...state, data_field_2: text }) }
+    const handleField3 = (text) => { setState({ ...state, data_field_3: text }) }
+    const handleField4 = (text) => { setState({ ...state, data_field_4: text }) }
+    const handleField5 = (text) => { setState({ ...state, data_field_5: text }) }
+    const handleField6 = (text) => { setState({ ...state, data_field_6: text }) }
+    const handleField7 = (text) => { setState({ ...state, data_field_7: text }) }
+    const handleField8 = (text) => { setState({ ...state, data_field_8: text }) }
+    const handleField9 = (text) => { setState({ ...state, data_field_9: text }) }
+    const handleField10 = (text) => { setState({ ...state, data_field_10: text }) }
+    const handleUpdate = () => {
+        props.updateItem(item.id, { ...state })
+        navigation.goBack()
+    }
+    const handleDelete = () => {
+        fetch(`http://localhost:3000/items/${item.id}`, {
+            method: "DELETE",
+        })
+    }
+    const handleAddPhotos = () => {
+        ImagePicker.getCameraRollPermissionsAsync()
+        ImagePicker.launchImageLibraryAsync().then(img => setImage(img.uri))
+        setUnSavedImage(true)
+    }
+    const handleUploadPhoto = () => {
+        props.uploadImage(item.id, image)
+        setUnSavedImage(false)
+    }
 
     const tableHead = ['Property', 'Value']
-    const tableTitle = [
-        "Name",
-        collection.data_title_1,
-        collection.data_title_2,
-        collection.data_title_3,
-        collection.data_title_4,
-        collection.data_title_5,
-        collection.data_title_6,
-        collection.data_title_7,
-        collection.data_title_8,
-        collection.data_title_9,
-        collection.data_title_10
-    ]
     const tableData = [
         ["Name", <TextInput value={state.title} onChangeText={handleTitle} />],
         [collection.data_title_1, <TextInput value={state.data_field_1} onChangeText={handleField1} />],
@@ -136,11 +114,15 @@ function EditItemForm(props) {
                 <Text style={styles.submitButtonText}> Add Image </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.submitButton}
-                onPress={handleUploadPhoto}>
-                <Text style={styles.submitButtonText}> upload photo </Text>
-            </TouchableOpacity>
+
+            {unSavedImage &&
+                <TouchableOpacity
+                    style={{ ...styles.submitButton, backgroundColor: "red" }}
+                    onPress={handleUploadPhoto}>
+                    <Text style={styles.submitButtonText}> Save Image </Text>
+                </TouchableOpacity>
+
+            }
 
             <View style={styles.container}>
                 <Table borderStyle={{ borderWidth: 1, borderColor: "black" }}>
@@ -163,7 +145,6 @@ function EditItemForm(props) {
         </ScrollView>
     )
 }
-
 
 const styles = StyleSheet.create({
     input: {
@@ -193,6 +174,5 @@ const mdp = (dispatch) => {
         updateItem: (itemId, item_obj) => dispatch(updateItem(itemId, item_obj)),
     }
 }
-
 
 export default connect(null, mdp)(EditItemForm)

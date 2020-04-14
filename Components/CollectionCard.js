@@ -5,11 +5,9 @@ import { connect } from 'react-redux'
 
 
 function CollectionCard(props) {
-
     const navigation = useNavigation()
-
     const [curCollection, setCurCollection] = useState(null)
-
+    
     useEffect(() => {
         setCurCollection(props.collections.find(coll=>coll.id == props.collection_id))
     }, [props.collections])
@@ -62,8 +60,6 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         borderColor:"grey",
     },
-
-
 })
 
 const msp = state => {
@@ -71,11 +67,5 @@ const msp = state => {
         collections: state.collections,
     }
 }
-
-const mdp = (dispatch) => {
-    return {
-    }
-}
-
-export default connect(msp, mdp)(CollectionCard)
+export default connect(msp)(CollectionCard)
 

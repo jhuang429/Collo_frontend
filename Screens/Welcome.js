@@ -7,18 +7,15 @@ import { autoSignIn, signIn, fetchCollections, logOut } from '../src/actionCreat
 
 function Welcome(props) {
 
-
-
+    //autologin if there is a token saved in AsyncStorage
     useEffect(() => {
         const checkTokenAsync = async () => {
             let token;
-
             try {
                 token = await AsyncStorage.getItem('token');
             } catch (e) {
                 // Restoring token failed
             }
-
             if (token) {
                 //get user info if token is present 
                 fetch("http://localhost:3000/autologin", {
@@ -39,7 +36,6 @@ function Welcome(props) {
         checkTokenAsync();
     }, []
     )
-
 
     return (
         <View style={styles.container}>
@@ -79,7 +75,6 @@ function Welcome(props) {
     )
 }
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -116,13 +111,10 @@ const mdp = dispatch => {
         fetchCollections: (token) => dispatch(fetchCollections(token))
     }
 }
-
 const msp = state => {
     return {
         currentUser: state.currentUser,
         token: state.token
     }
 }
-
-
 export default connect(msp, mdp)(Welcome)

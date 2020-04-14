@@ -5,11 +5,9 @@ import * as ImagePicker from 'expo-image-picker';
 import { connect } from 'react-redux'
 import { uploadImage, createItem } from '../src/actionCreators'
 import { useNavigation } from '@react-navigation/native';
-import { SearchBar } from 'react-native-elements';
 
 
 function NewItemForm(props) {
-
     const navigation = useNavigation()
 
     const [state, setState] = useState({
@@ -27,36 +25,33 @@ function NewItemForm(props) {
         data_field_9: null,
         data_field_10: null
     })
-
-    const handleTitle = (text) => { setState(prevState=>({...prevState, title: text })) }
-    const handleField1 = (text) => { setState(prevState=>({ ...prevState, data_field_1: text })) }
-    const handleField2 = (text) => { setState(prevState=>({ ...prevState, data_field_2: text })) }
-    const handleField3 = (text) => { setState(prevState=>({ ...prevState, data_field_3: text })) }
-    const handleField4 = (text) => { setState(prevState=>({ ...prevState, data_field_4: text })) }
-    const handleField5 = (text) => { setState(prevState=>({ ...prevState, data_field_5: text })) }
-    const handleField6 = (text) => { setState(prevState=>({ ...prevState, data_field_6: text })) }
-    const handleField7 = (text) => { setState(prevState=>({ ...prevState, data_field_7: text })) }
-    const handleField8 = (text) => { setState(prevState=>({ ...prevState, data_field_8: text })) }
-    const handleField9 = (text) => { setState(prevState=>({ ...prevState, data_field_9: text })) }
-    const handleField10 = (text) => { setState(prevState=>({ ...prevState, data_field_10: text })) }
-
     useEffect(
         () => {
-            let { title, id, data_title_1, data_title_2, data_title_3, data_title_4, data_title_5, data_title_6, data_title_7, data_title_8, data_title_9, data_title_10 } = props.collections.find(coll=> coll.id == props.route.params.collection.id)
+            let { title, id, data_title_1, data_title_2, data_title_3, data_title_4, data_title_5, data_title_6, data_title_7, data_title_8, data_title_9, data_title_10 } = props.collections.find(coll => coll.id == props.route.params.collection.id)
 
-            setState({ title: title, collection_id: id, "data_title_1": data_title_1, "data_title_2": data_title_2, "data_title_3": data_title_3, "data_title_4": data_title_4, "data_title_5": data_title_5, "data_title_6": data_title_6, "data_title_7": data_title_7, "data_title_8": data_title_8, "data_title_9": data_title_9, "data_title_10": data_title_10, image: null })}, []
+            setState({ title: title, collection_id: id, "data_title_1": data_title_1, "data_title_2": data_title_2, "data_title_3": data_title_3, "data_title_4": data_title_4, "data_title_5": data_title_5, "data_title_6": data_title_6, "data_title_7": data_title_7, "data_title_8": data_title_8, "data_title_9": data_title_9, "data_title_10": data_title_10, image: null })
+        }, []
     )
 
-const handleSubmit = () => {
-    props.createItem(state)
-    navigation.goBack()
-}
-
-const handleAddPhotos = () => {
-    ImagePicker.getCameraRollPermissionsAsync()
-    ImagePicker.launchImageLibraryAsync().then(img => setState(prevState=>({...prevState, image: img.uri })))
-
-}
+    const handleTitle = (text) => { setState(prevState => ({ ...prevState, title: text })) }
+    const handleField1 = (text) => { setState(prevState => ({ ...prevState, data_field_1: text })) }
+    const handleField2 = (text) => { setState(prevState => ({ ...prevState, data_field_2: text })) }
+    const handleField3 = (text) => { setState(prevState => ({ ...prevState, data_field_3: text })) }
+    const handleField4 = (text) => { setState(prevState => ({ ...prevState, data_field_4: text })) }
+    const handleField5 = (text) => { setState(prevState => ({ ...prevState, data_field_5: text })) }
+    const handleField6 = (text) => { setState(prevState => ({ ...prevState, data_field_6: text })) }
+    const handleField7 = (text) => { setState(prevState => ({ ...prevState, data_field_7: text })) }
+    const handleField8 = (text) => { setState(prevState => ({ ...prevState, data_field_8: text })) }
+    const handleField9 = (text) => { setState(prevState => ({ ...prevState, data_field_9: text })) }
+    const handleField10 = (text) => { setState(prevState => ({ ...prevState, data_field_10: text })) }
+    const handleSubmit = () => {
+        props.createItem(state)
+        navigation.goBack()
+    }
+    const handleAddPhotos = () => {
+        ImagePicker.getCameraRollPermissionsAsync()
+        ImagePicker.launchImageLibraryAsync().then(img => setState(prevState => ({ ...prevState, image: img.uri })))
+    }
 
     return (
         <View>
@@ -156,9 +151,6 @@ const handleAddPhotos = () => {
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField10} />}
-
-
-
             </ScrollView>
 
             <TouchableOpacity
@@ -166,6 +158,7 @@ const handleAddPhotos = () => {
                 onPress={handleSubmit}>
                 <Text style={styles.submitButtonText}> Submit </Text>
             </TouchableOpacity>
+
         </View>
     )
 }
@@ -195,14 +188,11 @@ const msp = (state) => {
         collections: state.collections
     }
 }
-
 const mdp = (dispatch) => {
     return {
         uploadImage: (itemId, imageUri) => dispatch(uploadImage(itemId, imageUri)),
         createItem: (item_obj) => dispatch(createItem(item_obj)),
     }
 }
-
-
 
 export default connect(msp, mdp)(NewItemForm)

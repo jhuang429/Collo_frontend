@@ -50,47 +50,47 @@ function EditCollectionForm(props) {
                 <Form>
                     <Item stackedLabel>
                         <Label>Collection Title</Label>
-                        <Input value={state.title} onChangeText={handleTitle}/>
+                        <Input value={state.title} onChangeText={handleTitle} />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 1</Label>
-                        <Input value={state.data_title_1} onChangeText={handleField1}/>
+                        <Input value={state.data_title_1} onChangeText={handleField1} />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 2</Label>
-                        <Input value={state.data_title_2} onChangeText={handleField2}/>
+                        <Input value={state.data_title_2} onChangeText={handleField2} />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 3</Label>
-                        <Input value={state.data_title_3} onChangeText={handleField3}/>
+                        <Input value={state.data_title_3} onChangeText={handleField3} />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 4</Label>
-                        <Input value={state.data_title_4} onChangeText={handleField4}/>
+                        <Input value={state.data_title_4} onChangeText={handleField4} />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 5</Label>
-                        <Input value={state.data_title_5} onChangeText={handleField5}/>
+                        <Input value={state.data_title_5} onChangeText={handleField5} />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 6</Label>
-                        <Input value={state.data_title_6} onChangeText={handleField6}/>
+                        <Input value={state.data_title_6} onChangeText={handleField6} />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 7</Label>
-                        <Input value={state.data_title_7} onChangeText={handleField7}/>
+                        <Input value={state.data_title_7} onChangeText={handleField7} />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 8</Label>
-                        <Input value={state.data_title_8} onChangeText={handleField8}/>
+                        <Input value={state.data_title_8} onChangeText={handleField8} />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 9</Label>
-                        <Input value={state.data_title_9} onChangeText={handleField9}/>
+                        <Input value={state.data_title_9} onChangeText={handleField9} />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 10</Label>
-                        <Input value={state.data_title_10} onChangeText={handleField10}/>
+                        <Input value={state.data_title_10} onChangeText={handleField10} />
                     </Item>
                 </Form>
             </ScrollView>
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
         paddingTop: 50
     },
     input: {
-
     },
     submitButton: {
         backgroundColor: '#7a42f4',
@@ -126,14 +125,12 @@ const styles = StyleSheet.create({
 })
 
 const mdp = dispatch => {
-
     return {
         editCollection: (collection_obj) => dispatch(editCollection(collection_obj)),
     }
 }
 
 const msp = state => {
-
     return {
         currentUser: state.currentUser,
         collections: state.collections

@@ -2,23 +2,7 @@ import React, { Component, useState, useEffect } from "react";
 import { StyleSheet, Alert } from 'react-native'
 import {connect} from 'react-redux'
 import { signUp } from '../src/actionCreators'
-
-import {
-    Container,
-    Header,
-    Title,
-    Content,
-    Button,
-    Item,
-    Label,
-    Input,
-    Body,
-    Left,
-    Right,
-    Icon,
-    Form,
-    Text
-} from "native-base";
+import { Container, Header, Title, Content, Button, Item, Label, Input, Body, Left, Right, Icon, Form, Text } from "native-base";
 import colors from '../Constants/colors'
 import { useNavigation } from '@react-navigation/native';
 
@@ -113,29 +97,20 @@ function SignUp(props) {
         </Container>
     );
 }
-
-
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#FFF"
     }
 });
-
 const mdp = dispatch => {
     return {
         signUp: (form)=>dispatch(signUp(form))
     }
 }
-
 const msp = state => {
     return {
         currentUser: state.currentUser
     }
 }
-
-
-
-
-
 export default connect(msp, mdp)(SignUp)
 

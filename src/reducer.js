@@ -1,8 +1,11 @@
+
+
 const initialState = {
     collections: [],
     currentUser: null,
-    token: null
+    token: null,
 }
+
 
 export const reducer = (prevState = initialState, action) => {
 

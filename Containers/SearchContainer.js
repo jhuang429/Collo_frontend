@@ -5,25 +5,7 @@ import { connect } from 'react-redux'
 import CollectionCard from '../Components/CollectionCard';
 import { useNavigation } from '@react-navigation/native';
 
-
-
-import {
-    Container,
-    Header,
-    Title,
-    Content,
-    Button,
-    Icon,
-    List,
-    ListItem,
-    Text,
-    Thumbnail,
-    Left,
-    Body,
-    Right,
-    H1
-} from "native-base";
-
+import { Container, Content, Button, List, ListItem, Text, Thumbnail, Left, Body, Right, H1 } from "native-base";
 
 function SearchContainer(props) {
     const navigation = useNavigation()
@@ -36,22 +18,15 @@ function SearchContainer(props) {
     const [items, setItems] = useState([])
 
     useEffect(() => {
-    let array = []
-    props.collections.forEach(coll => {
-        coll.items.forEach(item => array.push(item))
-        setItems(array)
-    }
-    )},[])
-
-    function extractFields(collections, collID){
-        const coll = collections.find(coll=>coll.id == collID)
-
-        return{ collection_id: coll.id, "data_title_1": coll.data_title_1, "data_title_2": coll.data_title_2, "data_title_3": coll.data_title_3, "data_title_4": coll.data_title_4, "data_title_5": coll.data_title_5, "data_title_6": coll.data_title_6, "data_title_7": coll.data_title_7, "data_title_8": coll.data_title_8, "data_title_9": coll.data_title_9, "data_title_10": coll.data_title_10 }
-    }
+        let array = []
+        props.collections.forEach(coll => {
+            coll.items.forEach(item => array.push(item))
+            setItems(array)
+        })
+    }, [])
 
 
     return (
-
         <Container style={styles.container}>
             <SearchBar
                 placeholder="Search"
@@ -61,11 +36,10 @@ function SearchContainer(props) {
                 containerStyle={{ backgroundColor: "white" }}
                 inputContainerStyle={{ backgroundColor: "white" }}
             />
-
             <Content>
                 <H1 style={styles.mb10}>Items</H1>
                 <List>
-                    {items && items.filter(coll=> coll.title.toLowerCase().includes(search)).map((item) => (
+                    {items && items.filter(coll => coll.title.toLowerCase().includes(search)).map((item) => (
                         <ListItem thumbnail key={item.id}>
                             <Left>
                                 <Thumbnail square size={55} source={{ uri: item.image }} />
@@ -77,7 +51,7 @@ function SearchContainer(props) {
                                 </Text>
                             </Body>
                             <Right>
-                                <Button transparent onPress={() => navigation.push('ItemEdit', { fields: extractFields(props.collections,item.collection_id), item: item})}>
+                                <Button transparent onPress={() => navigation.push('ItemEdit', { collection: props.collections.find(col => col.id === item.collection_id), item: item })}>
                                     <Text>View</Text>
                                 </Button>
                             </Right>
@@ -85,12 +59,12 @@ function SearchContainer(props) {
                     ))}
 
 
-                <H1 style={styles.mb10}>Collections</H1>
+                    <H1 style={styles.mb10}>Collections</H1>
 
-                    {props.collections && props.collections.filter(coll=> coll.title.toLowerCase().includes(search)).map((data) => (
+                    {props.collections && props.collections.filter(coll => coll.title.toLowerCase().includes(search)).map((data) => (
                         <ListItem thumbnail key={data.id}>
                             <Left>
-                                <Thumbnail square size={55} source={ require('../assets/no-img.png') } />
+                                <Thumbnail square size={55} source={require('../assets/no-img.png')} />
                             </Left>
                             <Body>
                                 <Text>{data.title}</Text>
@@ -99,7 +73,7 @@ function SearchContainer(props) {
                                 </Text>
                             </Body>
                             <Right>
-                                <Button transparent onPress={() => navigation.push('ItemContainer', { fields: extractFields(props.collections,data.id), collectionId: data.id, collectionTitle: data.title })}>
+                                <Button transparent onPress={() => navigation.push('ItemContainer', { collection_id: data.id, collectionTitle: data.title })}>
                                     <Text>View</Text>
                                 </Button>
                             </Right>
@@ -107,19 +81,7 @@ function SearchContainer(props) {
                     ))}
                 </List>
             </Content>
-
-
-
-
         </Container>
-
-
-
-
-
-
-
-
     )
 }
 
@@ -129,17 +91,10 @@ const styles = StyleSheet.create({
     },
 });
 
-
-
-
-
 const msp = state => {
     return {
         collections: state.collections
     }
 }
-
-
-
 export default connect(msp)(SearchContainer)
 

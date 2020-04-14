@@ -66,8 +66,6 @@ function NewCollectionForm(props) {
     return (
         <View style={styles.screen}>
             <ScrollView >
-
-
                 <Form>
                     <Item stackedLabel>
                         <Label>Collection Title</Label>
@@ -115,7 +113,6 @@ function NewCollectionForm(props) {
                     </Item>
                 </Form>
 
-
             </ScrollView>
 
             <TouchableOpacity
@@ -158,12 +155,9 @@ const mdp = dispatch => {
 }
 
 const msp = state => {
-
     return {
         currentUser: state.currentUser
     }
 }
-
-
 
 export default connect(msp, mdp)(NewCollectionForm)
