@@ -12,6 +12,9 @@ export const reducer = (prevState = initialState, action) => {
             return { ...prevState, collections: action.payload.collections }
         case 'CREATE_COLLECTION':
             return { ...prevState, collections: [...prevState.collections, action.payload.collection] }
+        case 'EDIT_COLLECTION':
+            let otherCollection = prevState.collections.filter(coll => coll.id !== action.payload.collection.id)
+            return { ...prevState, collections: [...otherCollection, action.payload.collection] }
         case 'CREATE_ITEM':
             let collection = prevState.collections.find(coll => coll.id === action.payload.item.collection_id)
             collection.items.push(action.payload.item)

@@ -41,8 +41,10 @@ function NewItemForm(props) {
     const handleField10 = (text) => { setState(prevState=>({ ...prevState, data_field_10: text })) }
 
     useEffect(
-        () => setState({ collection_id: props.route.params.fields.collection_id
-            }), []
+        () => {
+            let { title, id, data_title_1, data_title_2, data_title_3, data_title_4, data_title_5, data_title_6, data_title_7, data_title_8, data_title_9, data_title_10 } = props.collections.find(coll=> coll.id == props.route.params.collection.id)
+
+            setState({ title: title, collection_id: id, "data_title_1": data_title_1, "data_title_2": data_title_2, "data_title_3": data_title_3, "data_title_4": data_title_4, "data_title_5": data_title_5, "data_title_6": data_title_6, "data_title_7": data_title_7, "data_title_8": data_title_8, "data_title_9": data_title_9, "data_title_10": data_title_10, image: null })}, []
     )
 
 const handleSubmit = () => {
@@ -55,14 +57,11 @@ const handleAddPhotos = () => {
     ImagePicker.launchImageLibraryAsync().then(img => setState(prevState=>({...prevState, image: img.uri })))
 
 }
-    const { fields } = props.route.params
 
     return (
         <View>
-            <Text>collection ID: {props.route.params.fields.collection_id}</Text>
             {state.image ?
                 <Image
-
                     style={{ width: "100%", height: 150 }}
                     source={{ uri: state.image }}
                     resizeMode={'cover'} // cover or contain its upto you view look
@@ -88,72 +87,72 @@ const handleAddPhotos = () => {
                     autoCapitalize="none"
                     onChangeText={handleTitle} />
 
-                {fields.data_title_1 && <TextInput style={styles.input}
+                {state.data_title_1 && <TextInput style={styles.input}
                     underlineColorAndroid="transparent"
-                    placeholder={fields.data_title_1}
+                    placeholder={state.data_title_1}
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField1} />}
 
-                {fields.data_title_2 && <TextInput style={styles.input}
+                {state.data_title_2 && <TextInput style={styles.input}
                     underlineColorAndroid="transparent"
-                    placeholder={fields.data_title_2}
+                    placeholder={state.data_title_2}
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField2} />}
 
-                {fields.data_title_3 && <TextInput style={styles.input}
+                {state.data_title_3 && <TextInput style={styles.input}
                     underlineColorAndroid="transparent"
-                    placeholder={fields.data_title_3}
+                    placeholder={state.data_title_3}
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField3} />}
 
-                {fields.data_title_4 && <TextInput style={styles.input}
+                {state.data_title_4 && <TextInput style={styles.input}
                     underlineColorAndroid="transparent"
-                    placeholder={fields.data_title_4}
+                    placeholder={state.data_title_4}
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField4} />}
 
-                {fields.data_title_5 && <TextInput style={styles.input}
+                {state.data_title_5 && <TextInput style={styles.input}
                     underlineColorAndroid="transparent"
-                    placeholder={fields.data_title_5}
+                    placeholder={state.data_title_5}
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField5} />}
 
-                {fields.data_title_6 && <TextInput style={styles.input}
+                {state.data_title_6 && <TextInput style={styles.input}
                     underlineColorAndroid="transparent"
-                    placeholder={fields.data_title_6}
+                    placeholder={state.data_title_6}
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField6} />}
 
-                {fields.data_title_7 && <TextInput style={styles.input}
+                {state.data_title_7 && <TextInput style={styles.input}
                     underlineColorAndroid="transparent"
-                    placeholder={fields.data_title_7}
+                    placeholder={state.data_title_7}
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField7} />}
 
-                {fields.data_title_8 && <TextInput style={styles.input}
+                {state.data_title_8 && <TextInput style={styles.input}
                     underlineColorAndroid="transparent"
-                    placeholder={fields.data_title_8}
+                    placeholder={state.data_title_8}
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField8} />}
 
-                {fields.data_title_9 && <TextInput style={styles.input}
+                {state.data_title_9 && <TextInput style={styles.input}
                     underlineColorAndroid="transparent"
-                    placeholder={fields.data_title_9}
+                    placeholder={state.data_title_9}
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField9} />}
 
-                {fields.data_title_10 && <TextInput style={styles.input}
+                {state.data_title_10 && <TextInput style={styles.input}
                     underlineColorAndroid="transparent"
-                    placeholder={fields.data_title_10}
+                    placeholder={state.data_title_10}
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField10} />}
@@ -191,6 +190,12 @@ const styles = StyleSheet.create({
     }
 })
 
+const msp = (state) => {
+    return {
+        collections: state.collections
+    }
+}
+
 const mdp = (dispatch) => {
     return {
         uploadImage: (itemId, imageUri) => dispatch(uploadImage(itemId, imageUri)),
@@ -199,4 +204,5 @@ const mdp = (dispatch) => {
 }
 
 
-export default connect(null, mdp)(NewItemForm)
+
+export default connect(msp, mdp)(NewItemForm)

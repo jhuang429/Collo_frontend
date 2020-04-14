@@ -1,33 +1,37 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { View, Text, StyleSheet, Image, Button, TouchableHighlight } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import { connect } from 'react-redux'
 
 
-export default function CollectionCard(props) {
+function CollectionCard(props) {
 
     const navigation = useNavigation()
 
-    const { title, id, data_title_1, data_title_2, data_title_3, data_title_4, data_title_5, data_title_6, data_title_7, data_title_8, data_title_9, data_title_10 } = props.collection
+    const [curCollection, setCurCollection] = useState(null)
 
-    const fields = { collection_id: id, "data_title_1": data_title_1, "data_title_2": data_title_2, "data_title_3": data_title_3, "data_title_4": data_title_4, "data_title_5": data_title_5, "data_title_6": data_title_6, "data_title_7": data_title_7, "data_title_8": data_title_8, "data_title_9": data_title_9, "data_title_10": data_title_10 }
+    useEffect(() => {
+        setCurCollection(props.collections.find(coll=>coll.id == props.collection_id))
+    }, [props.collections])
 
     return (
         <View style={styles.container}>
             <View style={styles.subcontainer}>
-                <Text>{title}</Text>
-                <TouchableHighlight onPress={() => navigation.push('ItemContainer', { fields: fields, collection: props.collection })}>
+            {curCollection && <Text>{curCollection.title}</Text>}
+                <TouchableHighlight onPress={() => navigation.push('ItemContainer', { collection_id: curCollection.id, title:curCollection.title })}>
 
                     <View style={styles.thumbnail}>
-                        {props.collection.items[0] ?
-                            props.collection.items.slice(0, 4).map(item => item.image ? <Image
+                        {curCollection && curCollection.items[0] ?
+                            curCollection.items.slice(0, 4).map(item => item.image ? <Image
                                 key={item.id}
                                 style={{ width: "50%", height: "50%" }}
                                 source={{ uri: item.image }}
                                 resizeMode={'cover'} // cover or contain its upto you view look
                             /> : null
                             ) :
+                            
                             <Image
-                                key={props.collection.id}
+                                // key={curCollection.id}
                                 style={{ width: "100%", height: "100%" }}
                                 source={require('../assets/no-img.png')}
                                 resizeMode={'cover'} // cover or contain its upto you view look
@@ -62,4 +66,16 @@ const styles = StyleSheet.create({
 
 })
 
+const msp = state => {
+    return {
+        collections: state.collections,
+    }
+}
+
+const mdp = (dispatch) => {
+    return {
+    }
+}
+
+export default connect(msp, mdp)(CollectionCard)
 

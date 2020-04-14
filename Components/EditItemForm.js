@@ -42,18 +42,10 @@ function EditItemForm(props) {
 
 
 
-    const { item, fields } = props.route.params
+    const { item, collection } = props.route.params
 
     const handleUpdate = () => {
         props.updateItem(item.id, {...state})
-        // fetch(`http://localhost:3000/items/${item.id}`, {
-        //     method: "PATCH",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Accept": "application/json"
-        //     },
-        //     body: JSON.stringify({ ...state })
-        // })
         navigation.goBack()
     }
 
@@ -73,7 +65,7 @@ function EditItemForm(props) {
     }
 
     useEffect(
-        () =>
+        () => {
             setState({
                 title: item.title,
                 data_field_1: item.data_field_1,
@@ -86,7 +78,7 @@ function EditItemForm(props) {
                 data_field_8: item.data_field_8,
                 data_field_9: item.data_field_9,
                 data_field_10: item.data_field_10,
-            }), []
+            })}, []
     )
 
     useEffect(
@@ -97,16 +89,16 @@ function EditItemForm(props) {
     const tableHead = ['Property', 'Value']
     const tableTitle = [
         "Name",
-        fields.data_title_1,
-        fields.data_title_2,
-        fields.data_title_3,
-        fields.data_title_4,
-        fields.data_title_5,
-        fields.data_title_6,
-        fields.data_title_7,
-        fields.data_title_8,
-        fields.data_title_9,
-        fields.data_title_10
+        collection.data_title_1,
+        collection.data_title_2,
+        collection.data_title_3,
+        collection.data_title_4,
+        collection.data_title_5,
+        collection.data_title_6,
+        collection.data_title_7,
+        collection.data_title_8,
+        collection.data_title_9,
+        collection.data_title_10
     ]
     const tableData = [
         [<TextInput value={state.title} onChangeText={handleTitle} />],

@@ -41,7 +41,7 @@ function EditCollectionForm(props) {
 
     const handleSubmit = () => {
         props.editCollection(state)
-        props.navigation.navigate('My Collection')
+        props.navigation.goBack()
     }
 
     return (
@@ -135,7 +135,8 @@ const mdp = dispatch => {
 const msp = state => {
 
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        collections: state.collections
     }
 }
 

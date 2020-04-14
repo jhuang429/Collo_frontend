@@ -6,33 +6,34 @@ import { connect } from 'react-redux'
 import { useNavigation } from '@react-navigation/native';
 
 
-function ItemContainer({ route, collections }) {
+function ItemContainer(props) {
 
     const navigation = useNavigation()
 
 
-    navigation.setOptions({ title: route.params.collection.title, headerRight: () => (
+    navigation.setOptions({ title: props.route.params.title, headerRight: () => (
         <Button
-        onPress={() => { navigation.push('EditCollectionForm', { collection: route.params.collection }) }}
+        onPress={() => { navigation.push('EditCollectionForm', { collection: curCollection }) }}
           title="Edit"
           margin="10"
         />
       ),})
 
-    const [collectionId, setCollectionId] = useState(null)
+      const [curCollection, setCurCollection] = useState(null)
 
-    useEffect( 
-        ()=> route.params.collection.id && setCollectionId(route.params.collection.id),[]
-    )
+      useEffect(() => {
+          setCurCollection(props.collections.find(coll=>coll.id == props.route.params.collection_id))
+      }, [props.collections])
+
 
     return (
         <ScrollView>
         <View style={styles.screen}>
-             {collectionId && collections.find(coll=> coll.id == collectionId).items.map(item => (
-                    <ItemCard key={item.id} item={item} fields={route.params.fields} />
+             {curCollection && curCollection.items.map(item => (
+                    <ItemCard key={item.id} item={item} collection_id={curCollection.id} />
             ))}
         </View>
-            <Button title="Add" onPress={() => { navigation.push('NewItemForm', { fields: route.params.fields }) }} />
+            <Button title="Add" onPress={() => { navigation.push('NewItemForm', { collection_id: curCollection.id }) }} />
      </ScrollView>
     )
 }

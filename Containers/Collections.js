@@ -34,7 +34,7 @@ function Collections(props) {
                 {props.collections.length > 0 ?
                     props.collections.filter(coll=> coll.title.toLowerCase().includes(search))
                     
-                    .map(coll => <CollectionCard style={styles.CollectionCard} collection={coll} key={coll.id} />)
+                    .map(coll => <CollectionCard style={styles.CollectionCard} collection_id={coll.id} key={coll.id} />)
                     :
                     <Text>No Collections</Text>}
             </View>
