@@ -11,12 +11,18 @@ function ItemContainer({ route, collections }) {
     const navigation = useNavigation()
 
 
-    navigation.setOptions({ title: route.params.collectionTitle })
+    navigation.setOptions({ title: route.params.collection.title, headerRight: () => (
+        <Button
+        onPress={() => { navigation.push('EditCollectionForm', { collection: route.params.collection }) }}
+          title="Edit"
+          margin="10"
+        />
+      ),})
 
     const [collectionId, setCollectionId] = useState(null)
 
     useEffect( 
-        ()=> route.params.collectionId && setCollectionId(route.params.collectionId),[]
+        ()=> route.params.collection.id && setCollectionId(route.params.collection.id),[]
     )
 
     return (

@@ -6,11 +6,11 @@ import { createNewCollection } from '../src/actionCreators'
 import { Item, Label, Input, Form, Text } from "native-base";
 
 
-function NewCollectionForm(props) {
+function EditCollectionForm(props) {
 
     const [state, setState] = useState({
-        title: '',
-        user_id: null,
+        title: 'hello',
+        user_id: 1,
         data_title_1: null,
         data_title_2: null,
         data_title_3: null,
@@ -23,25 +23,26 @@ function NewCollectionForm(props) {
         data_title_10: null
     })
 
-    const clearState = () => {
-        setState({
-            title: '',
-            user_id: null,
-            data_title_1: null,
-            data_title_2: null,
-            data_title_3: null,
-            data_title_4: null,
-            data_title_5: null,
-            data_title_6: null,
-            data_title_7: null,
-            data_title_8: null,
-            data_title_9: null,
-            data_title_10: null
-        })
-    }
+    // const clearState = () => {
+    //     setState({
+    //         title: hello,
+    //         user_id: 1,
+    //         data_title_1: null,
+    //         data_title_2: null,
+    //         data_title_3: null,
+    //         data_title_4: null,
+    //         data_title_5: null,
+    //         data_title_6: null,
+    //         data_title_7: null,
+    //         data_title_8: null,
+    //         data_title_9: null,
+    //         data_title_10: null
+    //     })
+    // }
 
     useEffect(() => {
-        props.currentUser && setState(prevState => ({ ...prevState, user_id: props.currentUser.id }))
+        // props.currentUser && setState(prevState => ({ ...prevState, user_id: props.currentUser.id }))
+        setState(prevState => ({ ...prevState, ...props.route.params.collection }))
     }, [props.currentUser])
 
     const handleTitle = (text) => { setState(prevState => ({ ...prevState, title: text })) }
@@ -58,70 +59,86 @@ function NewCollectionForm(props) {
 
     const handleSubmit = () => {
         props.createNewCollection(state)
-        clearState()
+        // clearState()
         props.navigation.navigate('My Collection')
 
     }
+
+    // const data = [
+
+    //     { value: 'Price' },
+    //     { value: 'Date' },
+    //     { value: 'Quantity' },
+    //     { value: 'Rating' },
+    //     { value: 'Text' },
+    //     { value: 'Notes' },
+    // ];
 
     return (
         <View style={styles.screen}>
             <ScrollView >
 
+                {/* <TextInput style={styles.input}
+                    underlineColorAndroid="transparent"
+                    placeholder="Collection Title"
+                    placeholderTextColor={Colors.primary}
+                    autoCapitalize="none"
+                    onChangeText={handleTitle}
+                    value={state.title} /> */}
 
                 <Form>
                     <Item stackedLabel>
                         <Label>Collection Title</Label>
-                        <Input value={state.title} onChangeText={handleTitle} />
+                        <Input value={state.title} onChangeText={handleTitle}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 1</Label>
-                        <Input value={state.data_title_1} onChangeText={handleField1} />
+                        <Input value={state.data_title_1} onChangeText={handleField1}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 2</Label>
-                        <Input value={state.data_title_2} onChangeText={handleField2} />
+                        <Input value={state.data_title_2} onChangeText={handleField2}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 3</Label>
-                        <Input value={state.data_title_3} onChangeText={handleField3} />
+                        <Input value={state.data_title_3} onChangeText={handleField3}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 4</Label>
-                        <Input value={state.data_title_4} onChangeText={handleField4} />
+                        <Input value={state.data_title_4} onChangeText={handleField4}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 5</Label>
-                        <Input value={state.data_title_5} onChangeText={handleField5} />
+                        <Input value={state.data_title_5} onChangeText={handleField5}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 6</Label>
-                        <Input value={state.data_title_6} onChangeText={handleField6} />
+                        <Input value={state.data_title_6} onChangeText={handleField6}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 7</Label>
-                        <Input value={state.data_title_7} onChangeText={handleField7} />
+                        <Input value={state.data_title_7} onChangeText={handleField7}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 8</Label>
-                        <Input value={state.data_title_8} onChangeText={handleField8} />
+                        <Input value={state.data_title_8} onChangeText={handleField8}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 9</Label>
-                        <Input value={state.data_title_9} onChangeText={handleField9} />
+                        <Input value={state.data_title_9} onChangeText={handleField9}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Data Field 10</Label>
-                        <Input value={state.data_title_10} onChangeText={handleField10} />
+                        <Input value={state.data_title_10} onChangeText={handleField10}/>
                     </Item>
                 </Form>
-
 
             </ScrollView>
 
             <TouchableOpacity
                 style={styles.submitButton}
                 onPress={handleSubmit}>
-                <Text style={styles.submitButtonText}> Create New Collection </Text>
+                <Text style={styles.submitButtonText}> Update Collection </Text>
             </TouchableOpacity>
         </View>
     )
@@ -134,10 +151,7 @@ const styles = StyleSheet.create({
         paddingTop: 50
     },
     input: {
-        margin: 5,
-        height: 40,
-        borderColor: '#7a42f4',
-        borderWidth: 1
+
     },
     submitButton: {
         backgroundColor: '#7a42f4',
@@ -166,4 +180,4 @@ const msp = state => {
 
 
 
-export default connect(msp, mdp)(NewCollectionForm)
+export default connect(msp, mdp)(EditCollectionForm)

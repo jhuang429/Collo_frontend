@@ -7,7 +7,7 @@ import ItemContainer from '../Containers/ItemContainer';
 import ItemCard from '../Components/ItemCard'
 import EditItemCard from '../Components/EditItemForm'
 import NewItemForm from '../Components/NewItemForm';
-import NewCollectionForm from '../Screens/NewCollectionForm'
+import EditCollectionForm from '../Components/EditCollectionForm'
 
 
 const Stack = createStackNavigator();
@@ -20,6 +20,9 @@ function CollectionStack() {
             <Stack.Screen name="ItemCard" component={ItemCard} />
             <Stack.Screen name="ItemEdit" component={EditItemCard} />
             <Stack.Screen name="NewItemForm" component={NewItemForm} />
+            <Stack.Screen name="EditCollectionForm" component={EditCollectionForm} />
+
+            
             {/* <Stack.Screen name="NewCollectionForm" component={NewCollectionForm} /> */}
         </Stack.Navigator>
     );

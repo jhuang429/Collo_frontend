@@ -5,6 +5,7 @@ import ItemContainer from '../Containers/ItemContainer';
 import SearchContainer from '../Containers/SearchContainer';
 import EditItemCard from '../Components/EditItemForm'
 import NewItemForm from '../Components/NewItemForm';
+import EditCollectionForm from '../Components/EditCollectionForm'
 
 
 
@@ -18,6 +19,7 @@ function SearchStack() {
             <Stack.Screen name="ItemContainer" component={ItemContainer} />
             <Stack.Screen name="ItemEdit" component={EditItemCard} />
             <Stack.Screen name="NewItemForm" component={NewItemForm} />
+            <Stack.Screen name="EditCollectionForm" component={EditCollectionForm} />
             
         </Stack.Navigator>
     );
