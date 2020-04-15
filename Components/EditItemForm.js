@@ -10,8 +10,7 @@ import colors from '../Constants/colors'
 function EditItemForm(props) {
     const { item, collection } = props.route.params
     const navigation = useNavigation()
-    navigation.setOptions({ title: item.title })
-
+    
     //states
     const [image, setImage] = useState(null)
     const [unSavedImage, setUnSavedImage] = useState(false)
@@ -28,6 +27,7 @@ function EditItemForm(props) {
         data_field_9: "",
         data_field_10: "",
     })
+    navigation.setOptions({ title: state.title })
 
     useEffect(
         () => {
@@ -49,17 +49,17 @@ function EditItemForm(props) {
     )
 
     //form handlers
-    const handleTitle = (text) => { setState({ ...state, title: text }) }
-    const handleField1 = (text) => { setState({ ...state, data_field_1: text }) }
-    const handleField2 = (text) => { setState({ ...state, data_field_2: text }) }
-    const handleField3 = (text) => { setState({ ...state, data_field_3: text }) }
-    const handleField4 = (text) => { setState({ ...state, data_field_4: text }) }
-    const handleField5 = (text) => { setState({ ...state, data_field_5: text }) }
-    const handleField6 = (text) => { setState({ ...state, data_field_6: text }) }
-    const handleField7 = (text) => { setState({ ...state, data_field_7: text }) }
-    const handleField8 = (text) => { setState({ ...state, data_field_8: text }) }
-    const handleField9 = (text) => { setState({ ...state, data_field_9: text }) }
-    const handleField10 = (text) => { setState({ ...state, data_field_10: text }) }
+    const handleInput = (name) => {  return (text) => { setState({ ...state, [name]: text }) }}
+    // const handleField1 = (text) => { setState({ ...state, data_field_1: text }) }
+    // const handleField2 = (text) => { setState({ ...state, data_field_2: text }) }
+    // const handleField3 = (text) => { setState({ ...state, data_field_3: text }) }
+    // const handleField4 = (text) => { setState({ ...state, data_field_4: text }) }
+    // const handleField5 = (text) => { setState({ ...state, data_field_5: text }) }
+    // const handleField6 = (text) => { setState({ ...state, data_field_6: text }) }
+    // const handleField7 = (text) => { setState({ ...state, data_field_7: text }) }
+    // const handleField8 = (text) => { setState({ ...state, data_field_8: text }) }
+    // const handleField9 = (text) => { setState({ ...state, data_field_9: text }) }
+    // const handleField10 = (text) => { setState({ ...state, data_field_10: text }) }
     const handleUpdate = () => {
         props.updateItem(item.id, { ...state })
         navigation.goBack()
@@ -86,17 +86,17 @@ function EditItemForm(props) {
 
     const tableHead = ['Property', 'Value']
     const tableData = [
-        ["Name", <TextInput value={state.title} onChangeText={handleTitle} />],
-        [collection.data_title_1, <TextInput value={state.data_field_1} onChangeText={handleField1} />],
-        [collection.data_title_2, <TextInput value={state.data_field_2} onChangeText={handleField2} />],
-        [collection.data_title_3, <TextInput value={state.data_field_3} onChangeText={handleField3} />],
-        [collection.data_title_4, <TextInput value={state.data_field_4} onChangeText={handleField4} />],
-        [collection.data_title_5, <TextInput value={state.data_field_5} onChangeText={handleField5} />],
-        [collection.data_title_6, <TextInput value={state.data_field_6} onChangeText={handleField6} />],
-        [collection.data_title_7, <TextInput value={state.data_field_7} onChangeText={handleField7} />],
-        [collection.data_title_8, <TextInput value={state.data_field_8} onChangeText={handleField8} />],
-        [collection.data_title_9, <TextInput value={state.data_field_9} onChangeText={handleField9} />],
-        [collection.data_title_10, <TextInput value={state.data_field_10} onChangeText={handleField10} />],
+        ["Name", <TextInput value={state.title} onChangeText={handleInput("title")} />],
+        [collection.data_title_1, <TextInput value={state.data_field_1} onChangeText={handleInput("data_field_1")} />],
+        [collection.data_title_2, <TextInput value={state.data_field_2} onChangeText={handleInput("data_field_2")} />],
+        [collection.data_title_3, <TextInput value={state.data_field_3} onChangeText={handleInput("data_field_3")} />],
+        [collection.data_title_4, <TextInput value={state.data_field_4} onChangeText={handleInput("data_field_4")} />],
+        [collection.data_title_5, <TextInput value={state.data_field_5} onChangeText={handleInput("data_field_5")} />],
+        [collection.data_title_6, <TextInput value={state.data_field_6} onChangeText={handleInput("data_field_6")} />],
+        [collection.data_title_7, <TextInput value={state.data_field_7} onChangeText={handleInput("data_field_7")} />],
+        [collection.data_title_8, <TextInput value={state.data_field_8} onChangeText={handleInput("data_field_8")} />],
+        [collection.data_title_9, <TextInput value={state.data_field_9} onChangeText={handleInput("data_field_9")} />],
+        [collection.data_title_10, <TextInput value={state.data_field_10} onChangeText={handleInput("data_field_10")} />],
     ]
 
     return (

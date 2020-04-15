@@ -1,70 +1,108 @@
 import React from 'react'
-import { StyleSheet, Text, View, AsyncStorage, Button, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, AsyncStorage, Image, TouchableOpacity } from 'react-native';
+import { Container, Header, Content, Card, CardItem, Text, Body, Left, Icon, Button, Title, Right } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import colors from '../Constants/colors'
 
 
 function About(props) {
+    const navigation = useNavigation()
 
     return (
-                <View style={styles.container}>
-            <View style={styles.top}>
-            </View>
-            <Image style={{}} source={require('../assets/Logo.png')} />
 
-            <View style={styles.motto}>
-                <Text> Created by: Jerry Huang </Text>
-                <Text> Email: Jhuang9240@gmail.com</Text>
-                <Text>Github: jhuang429</Text>
-                
-                <Text>Flatiron Mod 5 project</Text>
+        <Container>
+            <Header>
+            <Left>
+            <Button transparent onPress={()=>navigation.goBack()}>
+              <Icon name='arrow-back' />
+              <Text>Back</Text>
+            </Button>
+            </Left>
+          <Body>
+            <Title>About</Title>
+          </Body>
 
-                <Text>Create an app that stores and organizes photos seamlessly with data</Text>
-                <Text>Use Cases:</Text>
-                <Text>Comic book collector who regularly goes to ComicCon. Being able to have entire collection with info to buy, sell trade comicbooks</Text>
-                <Text>Organize all your receipts so they are not cluterring your photo app. Keep documents for tax purpose or write down how much Sally owes for binger last night</Text>
-                <Text>Sneaker enthusitic who just wants to know whats in this closet inorder to plan for tomorrow's outfit or to know how much he has spent on all his sneakers</Text>
-                <Text>Macy's Buyer who goes out to a Ralph Lauren to checkout next season's collections. Seamlessly take photos, write notes and upload to team to start creating webpages and purchase orders.</Text>
-                
+          <Right>
+            <Button transparent>
+            </Button>
+          </Right>
 
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => props.navigation.push('TechSpec')}
-                >
-                    <Text>Tech Specs</Text>
-                </TouchableOpacity>
-                
-                <Text> </Text>
-            </View>
-        </View>
+          </Header>
+            <Content>
+
+                <Card>
+                    <CardItem header>
+                        <Text style={styles.CardHeader}>Flatiron School Mod 5 Final Project</Text>
+                    </CardItem>
+                    <CardItem>
+                        <Body>
+                            <Text style={{ fontWeight: "bold" }}>collo-</Text>
+                            <Text></Text>
+                            <Text>prefix</Text>
+                            <Text>1. a combining form meaning “gelatinous, glutinous; glue,” used in the formation of compound words</Text>
+                            <Text></Text>
+                            <TouchableOpacity
+                                style={{color:"blue"}}
+                                onPress={() => props.navigation.push('TechSpec')}>
+                                <Text style={{color:"blue"}}>Tech Specs</Text>
+                            </TouchableOpacity>
+                        </Body>
+                    </CardItem>
+
+                </Card>
+
+                <Card>
+                    <CardItem header>
+                        <Text style={styles.CardHeader}>The story:</Text>
+                    </CardItem>
+                    <CardItem>
+                        <Body>
+                            <Text>
+                                After being stuck inside for so long beacuse of COVID-19, I decided to start cleaning and organizing my stuff. I never realized how much STUFF I have accumulated over the years. I started taking photos of all my things to maybe start organizing and maybe start selling or giving stuff away. After stumbling with trying to upload photos to excel, I realize I could build am app that stores and organizes photos seamlessly with data.
+                            </Text>
+                        </Body>
+                    </CardItem>
+                </Card>
+
+                <Card>
+                    <CardItem header>
+                        <Text style={styles.CardHeader}>Use Cases:</Text>
+                    </CardItem>
+                    <CardItem>
+                        <Body>
+                            <Text ><Text style={{ fontWeight: "bold" }}>Collector</Text><Text> ‣ Baseball card collector who can catalog his entire collection on his phone with notes in order to go to conventions to sell and show off this collection.</Text></Text>
+                            <Text ><Text style={{ fontWeight: "bold" }}>Personal Organization</Text><Text> ‣ Organize all your receipts so they are not cluttering your photo app. Keep documents for tax purposes or write down how much Sally owes for binger last night.</Text></Text>
+                            <Text ><Text style={{ fontWeight: "bold" }}>Fashionista</Text><Text> ‣ Snap photos of her entire shoes, handbag, and dress collection in order to plan tomorrow's outfit (and figure out how much over the budget she has spent on clothes and accessories).</Text></Text>
+                            <Text ><Text style={{ fontWeight: "bold" }}>Enterprise</Text><Text> ‣ Macy's Buyer who goes out to market to checkout next season's Ralph Laurens collection. Seamlessly take photos, write notes and upload to team to start creating webpages and purchase orders.</Text></Text>
+                        </Body>
+                    </CardItem>
+                </Card>
+
+                <Card>
+                    <CardItem header>
+                        <Text style={styles.CardHeader}>Contact Info</Text>
+                    </CardItem>
+                    <CardItem>
+                        <Body>
+
+                            <Text>Created by: Jerry Huang </Text>
+                            <Text>Email: Jhuang9240@gmail.com</Text>
+                            <Text>Github: jhuang429</Text>
+
+                        </Body>
+                    </CardItem>
+
+                </Card>
+            </Content>
+
+        </Container>
+
     )
 }
 
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    top: {
-        flex: 1
-    },
-    logo: {
-        flex: 1,
-        // width: "65%",
-        // height: "10%",
-        width: 250,
-        height: 100,
-        resizeMode: 'stretch'
-    },
-    buttons: {
-        flex: 1,
-    },
-    motto: {
-        flex: 7,
-    },
-    bottom: {
-        flex: 1
-    }
+    CardHeader: { fontWeight: "bold", color: "#7a42f4" }
 })
 
 
