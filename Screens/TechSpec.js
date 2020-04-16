@@ -53,9 +53,11 @@ function TechSpec(props) {
                         <Body>
                             <Text ><Text style={{ fontWeight: "bold" }}>‣ Ruby on Rails</Text><Text> - Backend Framework</Text></Text>
                             <Text ><Text style={{ fontWeight: "bold" }}>‣ React / React Native</Text><Text> - Frontend Framework</Text></Text>
+                            <Text ><Text style={{ fontWeight: "bold" }}>‣ Redux</Text><Text> - State Management</Text></Text>
                             <Text ><Text style={{ fontWeight: "bold" }}>‣ Heroku</Text><Text> - Backend hosting</Text></Text>
                             <Text ><Text style={{ fontWeight: "bold" }}>‣ ActiveStorage</Text><Text> - Image Database</Text></Text>
                             <Text ><Text style={{ fontWeight: "bold" }}>‣ AWS S3</Text><Text> - Cloud Image Storage</Text></Text>
+                            <Text ><Text style={{ fontWeight: "bold" }}>‣ Bcrypt / JWT</Text><Text> - Authentication/ Encryption</Text></Text>
                             <Text> </Text>
                         </Body>
                     </CardItem>

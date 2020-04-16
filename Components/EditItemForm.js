@@ -71,8 +71,12 @@ function EditItemForm(props) {
     }
     const handleAddPhotos = () => {
         ImagePicker.getCameraRollPermissionsAsync()
-        ImagePicker.launchImageLibraryAsync().then(img => setImage(img.uri))
-        setUnSavedImage(true)
+        ImagePicker.launchImageLibraryAsync().then(img => {
+            if(img.uri) {
+                setImage(img.uri)
+                setUnSavedImage(true)
+            }
+        })
     }
     const handleCamera = () => {
         ImagePicker.getCameraRollPermissionsAsync()
@@ -109,7 +113,7 @@ function EditItemForm(props) {
                 /> :
                 <Image
                     style={{ width: "100%", height: 150 }}
-                    source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
+                    source={require('../assets/no-img.png')}
                     resizeMode={'cover'} // cover or contain its upto you view look
                 />}
 
@@ -122,7 +126,7 @@ function EditItemForm(props) {
             <TouchableOpacity
                 style={{...styles.submitButton, marginTop:5}}
                 onPress={handleCamera}>
-                <Text style={styles.submitButtonText}> User Camera </Text>
+                <Text style={styles.submitButtonText}> Use Camera </Text>
             </TouchableOpacity>
 
 

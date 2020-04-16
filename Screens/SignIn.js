@@ -61,11 +61,12 @@ function SignIn(props) {
                 <Form>
                     <Item stackedLabel>
                         <Label>Username</Label>
-                        <Input value={form.username} onChangeText={handleUserName} />
+                        <Input value={form.username} onChangeText={handleUserName} textContent={"username"}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Password</Label>
-                        <Input secureTextEntry value={form.password} onChangeText={handlePassword} />
+                        <Input secureTextEntry value={form.hidden} onChangeText={handlePassword} textContent={"password"}/>
+                        
                     </Item>
                 </Form>
                 <Button block style={{ margin: 15, marginTop: 50, color: "white x " }} onPress={handleSubmit}>

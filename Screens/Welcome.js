@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, AsyncStorage, Button, Image, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, AsyncStorage, Button, Image, TouchableOpacity } from 'react-native';
 import colors from '../Constants/colors'
 import { connect } from 'react-redux'
 import { autoSignIn, signIn, fetchCollections, logOut } from '../src/actionCreators'
@@ -51,10 +51,13 @@ function Welcome(props) {
 
             <View styles={styles.buttons}>
                 {props.token ?
-                    <View>
-                        {props.currentUser && <Text>Welcome back</Text>}
+                    <View style={styles.body}>
+                        {props.currentUser && <Text>Welcome back!</Text>}
                         <Button title={`Continue as ${props.currentUser.username}`} onPress={() => props.navigation.push('MainApp')} />
                         {/* <Text style={{ marginTop: 60, color: "blue" }} >Sign in with a different account?</Text> */}
+                        <Text></Text>
+                        <Text></Text>
+                        <Text></Text>
                         <Button title="Sign in with a different account?" style={{ marginTop: 60, color: "blue" }} onPress={() => props.logOut()} />
                     </View>
                     :
@@ -67,8 +70,10 @@ function Welcome(props) {
                     style={styles.button}
                     onPress={() => props.navigation.push('About')}
                 >
-                    <Text>About</Text>
+                    <Text style={{color:"blue",fontSize:18}}>About</Text>
                 </TouchableOpacity>
+
+               <Text>©2020 Big Table LLC, Jerry Huang</Text> 
             </View>
 
         </View>
@@ -92,14 +97,24 @@ const styles = StyleSheet.create({
         height: 100,
         resizeMode: 'stretch'
     },
+    body: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
     buttons: {
+
         flex: 3,
     },
     motto: {
         flex: 1,
     },
     bottom: {
-        flex: 3
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop:150,
+        marginBottom:50,
+
     }
 })
 

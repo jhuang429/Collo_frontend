@@ -25,8 +25,8 @@ function NewCollectionForm(props) {
 
     const clearState = () => {
         setState({
+            ...state,
             title: '',
-            user_id: null,
             data_title_1: null,
             data_title_2: null,
             data_title_3: null,

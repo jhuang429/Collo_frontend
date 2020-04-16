@@ -41,6 +41,8 @@ function About(props) {
                             <Text>prefix</Text>
                             <Text>1. a combining form meaning “gelatinous, glutinous; glue,” used in the formation of compound words</Text>
                             <Text></Text>
+                            <Text>Image + Data</Text>
+                            <Text></Text>
                             <TouchableOpacity
                                 style={{color:"blue"}}
                                 onPress={() => props.navigation.push('TechSpec')}>
@@ -58,7 +60,7 @@ function About(props) {
                     <CardItem>
                         <Body>
                             <Text>
-                                After being stuck inside for so long beacuse of COVID-19, I decided to start cleaning and organizing my stuff. I never realized how much STUFF I have accumulated over the years. I started taking photos of all my things to maybe start organizing and maybe start selling or giving stuff away. After stumbling with trying to upload photos to excel, I realize I could build am app that stores and organizes photos seamlessly with data.
+                                After being confined indoors for so long beacuse of COVID-19, I decided to start cleaning and organizing all my stuff. I never realized how much STUFF I have accumulated over the years. I started taking photos and jogging notes of all my things that I could sell on eBay or Poshmark. After stumbling with trying to upload photos to excel, I realize I could build am app that stores and organizes image seamlessly with data. It is revolutionary idea but it is a tool that could make peoples lives easier everyday. 
                             </Text>
                         </Body>
                     </CardItem>
@@ -66,14 +68,14 @@ function About(props) {
 
                 <Card>
                     <CardItem header>
-                        <Text style={styles.CardHeader}>Use Cases:</Text>
+                        <Text style={styles.CardHeader}>Who this App is for:</Text>
                     </CardItem>
                     <CardItem>
                         <Body>
-                            <Text ><Text style={{ fontWeight: "bold" }}>Collector</Text><Text> ‣ Baseball card collector who can catalog his entire collection on his phone with notes in order to go to conventions to sell and show off this collection.</Text></Text>
+                            <Text ><Text style={{ fontWeight: "bold" }}>Collectors</Text><Text> ‣ Baseball card collector who cataloged his entire collection on his phone with notes in order to go to conventions to sell and show off this collection.</Text></Text>
+                            <Text ><Text style={{ fontWeight: "bold" }}>Fashionistas</Text><Text> ‣ Snap photos of her entire shoes, handbag, and dress collection in order to plan tomorrow's outfit (and figure out how much over the budget she has spent on clothes and accessories).</Text></Text>
                             <Text ><Text style={{ fontWeight: "bold" }}>Personal Organization</Text><Text> ‣ Organize all your receipts so they are not cluttering your photo app. Keep documents for tax purposes or write down how much Sally owes for binger last night.</Text></Text>
-                            <Text ><Text style={{ fontWeight: "bold" }}>Fashionista</Text><Text> ‣ Snap photos of her entire shoes, handbag, and dress collection in order to plan tomorrow's outfit (and figure out how much over the budget she has spent on clothes and accessories).</Text></Text>
-                            <Text ><Text style={{ fontWeight: "bold" }}>Enterprise</Text><Text> ‣ Macy's Buyer who goes out to market to checkout next season's Ralph Laurens collection. Seamlessly take photos, write notes and upload to team to start creating webpages and purchase orders.</Text></Text>
+                            <Text ><Text style={{ fontWeight: "bold" }}>Enterprise</Text><Text> ‣ Retail Buyer who goes out to market to checkout next season's Ralph Laurens collection. Seamlessly take photos, write notes and upload to team to start creating webpages and purchase orders.</Text></Text>
                         </Body>
                     </CardItem>
                 </Card>

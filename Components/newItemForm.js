@@ -52,18 +52,23 @@ function NewItemForm(props) {
         ImagePicker.getCameraRollPermissionsAsync()
         ImagePicker.launchImageLibraryAsync().then(img => setState(prevState => ({ ...prevState, image: img.uri })))
     }
+    const handleCamera = () => {
+        ImagePicker.getCameraRollPermissionsAsync()
+        ImagePicker.launchCameraAsync().then(img => setImage(img.uri))
+        setUnSavedImage(true)
+    }
 
     return (
         <View>
             {state.image ?
                 <Image
-                    style={{ width: "100%", height: 150 }}
+                    style={{ width: "100%", height: 300 }}
                     source={{ uri: state.image }}
                     resizeMode={'cover'} // cover or contain its upto you view look
                 /> :
                 <Image
                     style={{ width: "100%", height: 150 }}
-                    source={{ uri: 'https://dummyimage.com/640x360/fff/aaa' }}
+                    source={require('../assets/no-img.png')}
                     resizeMode={'cover'} // cover or contain its upto you view look
                 />}
 
@@ -72,6 +77,12 @@ function NewItemForm(props) {
                 style={styles.submitButton}
                 onPress={handleAddPhotos}>
                 <Text style={styles.submitButtonText}> Add Image </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={{...styles.submitButton, marginTop:5}}
+                onPress={handleCamera}>
+                <Text style={styles.submitButtonText}> Use Camera </Text>
             </TouchableOpacity>
 
             <ScrollView style={styles.container}>
@@ -151,13 +162,13 @@ function NewItemForm(props) {
                     placeholderTextColor={Colors.primary}
                     autoCapitalize="none"
                     onChangeText={handleField10} />}
-            </ScrollView>
 
-            <TouchableOpacity
-                style={styles.submitButton}
-                onPress={handleSubmit}>
-                <Text style={styles.submitButtonText}> Submit </Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={handleSubmit}>
+                    <Text style={styles.submitButtonText}> Submit </Text>
+                </TouchableOpacity>
+            </ScrollView>
 
         </View>
     )
