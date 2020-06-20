@@ -14,8 +14,8 @@ function Collections(props) {
     };
 
     useEffect(() => {
-        props.token ? props.fetchCollections(props.token) : null
-    }, [props.token]
+    props.fetchCollections(props.token)
+    }, []
     )
     
     return (

@@ -7,36 +7,6 @@ import { autoSignIn, signIn, fetchCollections, logOut } from '../src/actionCreat
 
 function Welcome(props) {
 
-    //autologin if there is a token saved in AsyncStorage
-    useEffect(() => {
-        const checkTokenAsync = async () => {
-            let token;
-            try {
-                token = await AsyncStorage.getItem('token');
-            } catch (e) {
-                // Restoring token failed
-            }
-            if (token) {
-                //get user info if token is present 
-                fetch("http://localhost:3000/autologin", {
-                    headers: {
-                        "Authorization": token
-                    }
-                })
-                    .then(res => res.json())
-                    .then(response => {
-                        if (response.errors) {
-                            Alert.alert(response.errors)
-                        } else {
-                            props.autoSignIn(token)
-                        }
-                    })
-            }
-        };
-        checkTokenAsync();
-    }, []
-    )
-
     return (
         <View style={styles.container}>
 
@@ -50,19 +20,9 @@ function Welcome(props) {
             </View>
 
             <View styles={styles.buttons}>
-                {props.token ?
                     <View style={styles.body}>
-                        {props.currentUser && <Text>Welcome back!</Text>}
-                        <Button title={`Continue as ${props.currentUser.username}`} onPress={() => props.navigation.push('MainApp')} />
-                        {/* <Text style={{ marginTop: 60, color: "blue" }} >Sign in with a different account?</Text> */}
-                        <Text></Text>
-                        <Text></Text>
-                        <Text></Text>
-                        <Button title="Sign in with a different account?" style={{ marginTop: 60, color: "blue" }} onPress={() => props.logOut()} />
+                        <Button title={`Welcome`} onPress={() => props.navigation.push('MainApp')} />
                     </View>
-                    :
-                    <Button title="Sign In / Sign Up" onPress={() => props.navigation.push('SignIn')} />
-                }
             </View>
 
             <View style={styles.bottom}>
