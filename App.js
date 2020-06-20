@@ -13,13 +13,19 @@ import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { reducer } from './src/reducer'
 import ErrorBoundary from 'react-native-error-boundary'
+import {init} from './db'
 
 
 export default function App() {
 
+  init().then(()=>{
+    console.log('database is setup')
+  }) 
+
   const Stack = createStackNavigator();
 
   const store = createStore(reducer, applyMiddleware(thunk))
+
 
   return (
     <ErrorBoundary>
