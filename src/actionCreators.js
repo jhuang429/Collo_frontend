@@ -1,10 +1,15 @@
 import { Alert, AsyncStorage } from 'react-native'
 import * as FileSystem from 'expo-file-system';''
+import {fetchCol, createCollection} from '../db'
 
 
 const api = "http://localhost:3000"
 
+
+
 export const fetchCollections = (token) => dispatch => {
+    // console.log("hi")
+    // fetchCol().then(data=>console.log(data.rows._array))
     fetch(`${api}/collections`, {
         headers: {
             "Authorization": token
@@ -12,26 +17,29 @@ export const fetchCollections = (token) => dispatch => {
     })
         .then(resp => resp.json())
         .then(data => {
-            dispatch({ type: 'FETCH_COLLECTIONS', payload: { collections: data } })
+            console.log(data)
+            // dispatch({ type: 'FETCH_COLLECTIONS', payload: { collections: data } })
         }
         )
 }
 
 export const createNewCollection = (collection_obj) => dispatch => {
-    fetch(`${api}/collections`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({ collection: collection_obj })
-    })
-        .then(resp => resp.json())
-        .then(
-            data => {
-                dispatch({ type: 'CREATE_COLLECTION', payload: { collection: data } })
-            }
-        )
+    console.log("CREATING")
+    createCollection(collection_obj).then((x)=>console.log("return", x))
+    // fetch(`${api}/collections`, {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         "Accept": "application/json"
+    //     },
+    //     body: JSON.stringify({ collection: collection_obj })
+    // })
+    //     .then(resp => resp.json())
+    //     .then(
+    //         data => {
+    //             dispatch({ type: 'CREATE_COLLECTION', payload: { collection: data } })
+    //         }
+    //     )
 }
 
 export const editCollection = (collection_obj) => dispatch => {

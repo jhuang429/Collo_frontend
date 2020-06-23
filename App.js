@@ -18,9 +18,13 @@ import {init} from './db'
 
 export default function App() {
 
+
+  //initialize sqlite database
   init().then(()=>{
     console.log('database is setup')
-  }) 
+  }).catch(err=>{
+    console.log("initialize db failed")
+  })
 
   const Stack = createStackNavigator();
 
