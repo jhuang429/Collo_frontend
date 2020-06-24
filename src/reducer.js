@@ -2,6 +2,7 @@
 
 const initialState = {
     collections: [],
+    items: [],
     currentUser: null,
     token: null,
 }

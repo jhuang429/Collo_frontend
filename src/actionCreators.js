@@ -1,6 +1,6 @@
 import { Alert, AsyncStorage } from 'react-native'
 import * as FileSystem from 'expo-file-system';''
-import {fetchCol, createCollection} from '../db'
+import {getCollectionsFromDB, CreateCollectionInDB} from '../db'
 
 
 const api = "http://localhost:3000"
@@ -8,24 +8,18 @@ const api = "http://localhost:3000"
 
 
 export const fetchCollections = (token) => dispatch => {
-    // console.log("hi")
-    // fetchCol().then(data=>console.log(data.rows._array))
-    fetch(`${api}/collections`, {
-        headers: {
-            "Authorization": token
-        }
-    })
-        .then(resp => resp.json())
+    console.log("hi")
+    getCollectionsFromDB()
         .then(data => {
-            console.log(data)
-            // dispatch({ type: 'FETCH_COLLECTIONS', payload: { collections: data } })
+            console.log(data.rows._array)
+            dispatch({ type: 'FETCH_COLLECTIONS', payload: { collections: data.rows._array } })
         }
         )
 }
 
 export const createNewCollection = (collection_obj) => dispatch => {
     console.log("CREATING")
-    createCollection(collection_obj).then((x)=>console.log("return", x))
+    CreateCollectionInDB(collection_obj).then((x)=>console.log("return", x))
     // fetch(`${api}/collections`, {
     //     method: "POST",
     //     headers: {
