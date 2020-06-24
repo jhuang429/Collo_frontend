@@ -114,5 +114,6 @@ export const CreateCollectionInDB = (obj) => {
             )
         })  
     })
+    
     return promise
 }
