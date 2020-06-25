@@ -14,8 +14,8 @@ function Collections(props) {
     };
 
     useEffect(() => {
-        props.token ? props.fetchCollections(props.token) : null
-    }, [props.token]
+    props.fetchCollections()
+    }, []
     )
     
     return (
@@ -62,7 +62,7 @@ const msp = state => {
 
 const mdp = (dispatch) => {
     return {
-        fetchCollections: (token) => dispatch(fetchCollections(token))
+        fetchCollections: () => dispatch(fetchCollections())
     }
 }
 

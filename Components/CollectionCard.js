@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 function CollectionCard(props) {
     const navigation = useNavigation()
     const [curCollection, setCurCollection] = useState(null)
+    const [items, setItems] = useState(null)
     
     useEffect(() => {
         setCurCollection(props.collections.find(coll=>coll.id == props.collection_id))
@@ -19,7 +20,7 @@ function CollectionCard(props) {
                 <TouchableHighlight onPress={() => navigation.push('ItemContainer', { collection_id: curCollection.id, title:curCollection.title })}>
 
                     <View style={styles.thumbnail}>
-                        {curCollection && curCollection.items[0] ?
+                        {curCollection && items ?
                             curCollection.items.slice(0, 4).map(item => item.image ? <Image
                                 key={item.id}
                                 style={{ width: "50%", height: "50%" }}

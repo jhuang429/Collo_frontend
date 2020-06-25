@@ -13,13 +13,30 @@ import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { reducer } from './src/reducer'
 import ErrorBoundary from 'react-native-error-boundary'
+import {initCollectionsDB, initItemsDB} from './db'
 
 
 export default function App() {
 
+
+  //initialize sqlite collection database
+  initCollectionsDB().then(()=>{
+    console.log('Collections db is setup')
+  }).catch(err=>{
+    console.log("Collections db failed")
+  })
+
+    //initialize sqlite items database
+    initItemsDB().then(()=>{
+      console.log('Collections db is setup')
+    }).catch(err=>{
+      console.log("Collections db failed")
+    })
+
   const Stack = createStackNavigator();
 
   const store = createStore(reducer, applyMiddleware(thunk))
+
 
   return (
     <ErrorBoundary>

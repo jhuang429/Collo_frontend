@@ -1,36 +1,39 @@
 import { Alert, AsyncStorage } from 'react-native'
+import * as FileSystem from 'expo-file-system';''
+import {getCollectionsFromDB, CreateCollectionInDB} from '../db'
 
 
 const api = "http://localhost:3000"
 
+
+
 export const fetchCollections = (token) => dispatch => {
-    fetch(`${api}/collections`, {
-        headers: {
-            "Authorization": token
-        }
-    })
-        .then(resp => resp.json())
+    console.log("hi")
+    getCollectionsFromDB()
         .then(data => {
-            dispatch({ type: 'FETCH_COLLECTIONS', payload: { collections: data } })
+            console.log(data.rows._array)
+            dispatch({ type: 'FETCH_COLLECTIONS', payload: { collections: data.rows._array } })
         }
         )
 }
 
 export const createNewCollection = (collection_obj) => dispatch => {
-    fetch(`${api}/collections`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({ collection: collection_obj })
-    })
-        .then(resp => resp.json())
-        .then(
-            data => {
-                dispatch({ type: 'CREATE_COLLECTION', payload: { collection: data } })
-            }
-        )
+    console.log("CREATING")
+    CreateCollectionInDB(collection_obj).then((x)=>console.log("return", x))
+    // fetch(`${api}/collections`, {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         "Accept": "application/json"
+    //     },
+    //     body: JSON.stringify({ collection: collection_obj })
+    // })
+    //     .then(resp => resp.json())
+    //     .then(
+    //         data => {
+    //             dispatch({ type: 'CREATE_COLLECTION', payload: { collection: data } })
+    //         }
+    //     )
 }
 
 export const editCollection = (collection_obj) => dispatch => {
@@ -74,22 +77,37 @@ export const createItem = item_obj => dispatch => {
 }
 
 export const uploadImage = (itemId, imageUri) => dispatch => {
-    let formdata = new FormData();
-    formdata.append("image", { uri: imageUri, name: `${itemId}.jpg`, type: 'image/jpeg' })
+    const fileName = `${itemId}.jpg`
+    const newPath = FileSystem.documentDirectory + fileName
 
-    fetch(`${api}/items/${itemId}/image`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
-        body: formdata
-    })
-        .then(resp => resp.json())
-        .then(
-            data => {
-                dispatch({ type: 'UPDATE_ITEM', payload: { item: data } })
-            }
-        )
+    try{
+        FileSystem.moveAsync({
+            from: imageUri,
+            to: newPath
+        })
+        console.log(newPath)
+    } catch(err){
+        console.log(err)
+        throw err
+    }
+    
+    
+    // let formdata = new FormData();
+    // formdata.append("image", { uri: imageUri, name: `${itemId}.jpg`, type: 'image/jpeg' })
+
+    // fetch(`${api}/items/${itemId}/image`, {
+    //     method: "POST",
+    //     headers: {
+    //         'Content-Type': 'multipart/form-data',
+    //     },
+    //     body: formdata
+    // })
+    //     .then(resp => resp.json())
+    //     .then(
+    //         data => {
+    //             dispatch({ type: 'UPDATE_ITEM', payload: { item: data } })
+    //         }
+    //     )
 }
 
 export const updateItem = (itemId, item_obj) => dispatch => {
