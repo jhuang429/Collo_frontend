@@ -37,16 +37,17 @@ export const initItemsDB = () => {
             tx.executeSql(`CREATE TABLE IF NOT EXISTS collections (
                 id INTEGER PRIMARY KEY NOT NULL, 
                 title TEXT,
-                data_title_1 TEXT, 
-                data_title_2 TEXT, 
-                data_title_3 TEXT, 
-                data_title_4 TEXT, 
-                data_title_5 TEXT, 
-                data_title_6 TEXT, 
-                data_title_7 TEXT, 
-                data_title_8 TEXT, 
-                data_title_9 TEXT, 
-                data_title_10 TEXT
+                collection_id INTEGER,
+                data_field_1 TEXT,  
+                data_field_2 TEXT, 
+                data_field_3 TEXT, 
+                data_field_4 TEXT, 
+                data_field_5 TEXT, 
+                data_field_6 TEXT, 
+                data_field_7 TEXT, 
+                data_field_8 TEXT, 
+                data_field_9 TEXT, 
+                data_field_10 TEXT
                 );`, [],
                 (_,result) => {
                     resolve(result)

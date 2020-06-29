@@ -28,9 +28,9 @@ export default function App() {
 
     //initialize sqlite items database
     initItemsDB().then(()=>{
-      console.log('Collections db is setup')
+      console.log('Items db is setup')
     }).catch(err=>{
-      console.log("Collections db failed")
+      console.log("Items db failed")
     })
 
   const Stack = createStackNavigator();
