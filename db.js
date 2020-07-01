@@ -61,7 +61,6 @@ export const initItemsDB = () => {
     return promise
 }
 
-
 export const getCollectionsFromDB = () => {
     const promise = new Promise((resolve, reject)=>{
         db.transaction((tx)=>{
