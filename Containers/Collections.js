@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 import CollectionCard from '../Components/CollectionCard';
 import { connect } from 'react-redux'
-import { fetchCollections } from '../src/actionCreators'
+import { fetchCollections, fetchItems } from '../src/actionCreators'
 import { SearchBar } from 'react-native-elements';
 
 function Collections(props) {
@@ -15,6 +15,7 @@ function Collections(props) {
 
     useEffect(() => {
     props.fetchCollections()
+    props.fetchItems()
     }, []
     )
     

@@ -14,6 +14,8 @@ export const reducer = (prevState = initialState, action) => {
     switch (action.type) {
         case 'FETCH_COLLECTIONS':
             return { ...prevState, collections: action.payload.collections }
+        case 'FETCH_ITEMS':
+            return { ...prevState, items: action.payload.items }
         case 'CREATE_COLLECTION':
             return { ...prevState, collections: [...prevState.collections, action.payload.collection] }
         case 'EDIT_COLLECTION':
