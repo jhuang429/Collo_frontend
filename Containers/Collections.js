@@ -63,7 +63,8 @@ const msp = state => {
 
 const mdp = (dispatch) => {
     return {
-        fetchCollections: () => dispatch(fetchCollections())
+        fetchCollections: () => dispatch(fetchCollections()),
+        fetchItems: () => dispatch(fetchItems())
     }
 }
 

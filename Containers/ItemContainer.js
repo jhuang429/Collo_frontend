@@ -20,15 +20,17 @@ function ItemContainer(props) {
       ),})
 
       const [curCollection, setCurCollection] = useState(null)
+      const [curItems, setCurItems] = useState([])
 
       useEffect(() => {
           setCurCollection(props.collections.find(coll=>coll.id == props.route.params.collection_id))
-      }, [props.collections])
+          setCurItems(props.items.filter(item=>item.collection_id == props.route.params.collection_id))
+      }, [props.collections, props.items])
 
     return (
         <ScrollView>
         <View style={styles.screen}>
-             {curCollection && curCollection.items.map(item => (
+             {curCollection && curItems.map(item => (
                     <ItemCard key={item.id} item={item} collection_id={curCollection.id} />
             ))}
         </View>
@@ -52,7 +54,10 @@ const styles = StyleSheet.create({
 
 
 const msp = (state) => {
-    return { collections: state.collections };
+    return { 
+        collections: state.collections,
+        items: state.items
+     };
 }
 
 

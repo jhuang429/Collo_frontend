@@ -1,6 +1,6 @@
 import { Alert, AsyncStorage } from 'react-native'
 import * as FileSystem from 'expo-file-system'; ''
-import { getCollectionsFromDB, CreateCollectionInDB } from '../db'
+import { getCollectionsFromDB, CreateCollectionInDB, getItemsFromDB, CreateItemInDB } from '../db'
 
 
 const api = "http://localhost:3000"
@@ -14,6 +14,7 @@ export const fetchCollections = (token) => dispatch => {
             dispatch({ type: 'FETCH_COLLECTIONS', payload: { collections: data.rows._array } })
         }
         )
+    }
 
     export const fetchItems = (token) => dispatch => {
         getItemsFromDB()
