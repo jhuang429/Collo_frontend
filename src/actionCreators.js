@@ -62,26 +62,27 @@ export const fetchCollections = (token) => dispatch => {
     }
 
     export const createItem = item_obj => dispatch => {
+        console.log("CREATING")
+        CreateItemInDB(item_obj).then((x) => console.log("return", x))
+        // let formdata = new FormData();
+        // for (var key in item_obj) {
+        //     formdata.append(key, item_obj[key]);
+        // }
+        // formdata.append("image", { uri: item_obj.image, name: `${item_obj.id}.jpg`, type: 'image/jpeg' })
 
-        let formdata = new FormData();
-        for (var key in item_obj) {
-            formdata.append(key, item_obj[key]);
-        }
-        formdata.append("image", { uri: item_obj.image, name: `${item_obj.id}.jpg`, type: 'image/jpeg' })
-
-        fetch(`${api}/items`, {
-            method: `POST`,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-            body: formdata
-        }).then(
-            resp => resp.json()
-        ).then(
-            data => {
-                dispatch({ type: 'CREATE_ITEM', payload: { item: data } })
-            }
-        )
+        // fetch(`${api}/items`, {
+        //     method: `POST`,
+        //     headers: {
+        //         'Content-Type': 'multipart/form-data',
+        //     },
+        //     body: formdata
+        // }).then(
+        //     resp => resp.json()
+        // ).then(
+        //     data => {
+        //         dispatch({ type: 'CREATE_ITEM', payload: { item: data } })
+        //     }
+        // )
     }
 
     export const uploadImage = (itemId, imageUri) => dispatch => {

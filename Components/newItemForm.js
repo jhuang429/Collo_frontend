@@ -44,6 +44,7 @@ function NewItemForm(props) {
     const handleField8 = (text) => { setState(prevState => ({ ...prevState, data_field_8: text })) }
     const handleField9 = (text) => { setState(prevState => ({ ...prevState, data_field_9: text })) }
     const handleField10 = (text) => { setState(prevState => ({ ...prevState, data_field_10: text })) }
+    
     const handleSubmit = () => {
         props.createItem(state)
         navigation.goBack()
@@ -201,7 +202,7 @@ const msp = (state) => {
 }
 const mdp = (dispatch) => {
     return {
-        uploadImage: (itemId, imageUri) => dispatch(uploadImage(itemId, imageUri)),
+        // uploadImage: (itemId, imageUri) => dispatch(uploadImage(itemId, imageUri)),
         createItem: (item_obj) => dispatch(createItem(item_obj)),
     }
 }
